@@ -48,6 +48,7 @@ function attAssunto(assunto) {
 }
 
 function resetar() {
+  deleteFiles(files)
   files = [];
   $(".prevAnex").empty();
 
@@ -221,6 +222,7 @@ function enviarEmail(email) {
         console.log("Recebido de resposta:", data);
         $("#btnEmail").attr("disabled", false);
         console.log("status", data);
+        deleteFiles(files)
         if (data.result) {
           if (
             data.result[0] == "success" ||
@@ -244,6 +246,7 @@ function enviarEmail(email) {
             });
           }
         } else {
+          deleteFiles(files)
           Swal.fire({
             icon: "error",
             title: data[0],
@@ -255,7 +258,7 @@ function enviarEmail(email) {
         Swal.close();
         console.error("Requisição para a API falhou");
         console.log("textStatus", textStatus);
-
+        deleteFiles(files)
         // Exibir mensagem de erro para o usuário ou realizar outra ação
         Swal.fire({
           icon: "error",
@@ -562,12 +565,17 @@ function atualizarProgresso(progressoTotal, idBarra) {
       "background-color",
       cor + " !important"
     );
+    
   }
 }
 async function addAnexo(newfiles) {
+
   for (var i = 0; i < newfiles.length; i++) {
+    $("#barraProgresso").progressbar({ value: 0 });
+    $("#barraProgresso").show();
     var link = await upFile(newfiles[i]);
     files.push(link);
+    $("#barraProgresso").hide();
   }
 }
 function upFile(file) {
@@ -578,8 +586,7 @@ function upFile(file) {
       .ref("anexos/" + localStorage.getItem("idUser") + "/" + nome);
 
     var uploadTask = storageRef.put(file);
-    $("#barraProgresso").progressbar({ value: 0 });
-    $("#barraProgresso").show();
+   
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -590,19 +597,52 @@ function upFile(file) {
       (error) => {
         console.error("Upload falhou:", error);
         reject(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Erro ao anexar arquivos!",
+        })
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          miniArquivo = "<label class='labAnex'>" + nome;
+          miniArquivo = "<label class='labAnex' id="+downloadURL+">" + nome;
           btnExcluir = "<button class='delAnex'></button></label>";
           lbl = miniArquivo + btnExcluir;
           $(".prevAnex").append(lbl);
-          $("#barraProgresso").hide();
+          
           resolve(downloadURL);
         });
       }
     );
   });
+}
+function deleteFileFromURL(fileURL) {
+  return new Promise((resolve, reject) => {
+    // Obtém uma referência ao arquivo com base na URL
+    var storageRef = firebase.storage().refFromURL(fileURL);
+    storageRef
+      .delete()
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir arquivo:", error);
+        reject(error);
+      });
+  });
+}
+
+// Função para apagar vários arquivos
+function deleteFiles(fileURLs) {
+  const deletePromises = fileURLs.map(url => deleteFileFromURL(url));
+
+  Promise.all(deletePromises)
+    .then(() => {
+      console.log("Todos os arquivos foram apagados com sucesso.");
+    })
+    .catch((error) => {
+      console.error("Erro ao apagar alguns arquivos:", error);
+    });
 }
 
 function attId(idEmail) {
@@ -675,7 +715,7 @@ $(document).ready(() => {
       width: $(".emailBox").width(),
       height: $(".emailBox").height(),
     });
-
+    $("#barraProgresso").css("width", $("#cc").outerWidth());
     editor = $("#email").cleditor();
     $iframe = $(editor[0].$frame);
     $iframe.contents().on("dragenter dragover", function (e) {
@@ -732,12 +772,12 @@ $(document).ready(() => {
     addAnexo(newfiles);
   });
   $(document).on("click", ".delAnex", function () {
+      
+    deleteFileFromURL($(this).parent().attr('id'))
+    files = files.filter(item => item !== $(this).parent().attr('id'));
+    console.log(files)
+    
     $(this).parent().remove();
-    for (var i = 0; i < files.length; i++) {
-      if (files[i].name == $(this).parent().text()) {
-        files.splice(i, 1);
-      }
-    }
   });
   $iframe.contents().on("dragenter dragover", function (e) {
     entrou(e);

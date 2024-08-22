@@ -335,6 +335,16 @@ label {
 }
 
 #barraProgresso{
+  padding:0px !important;
+  border:none !important;
   width: 100%;
   height: 10px;
+  background-color: #d6d6ff5b;
+}
+.ui-progressbar-value{
+  padding-bottom:1px !important;
+}
+.ui-corner-all, .ui-widget, .ui-widget-content{
+  padding:0px !important;
+  background-color: #ffffff5b;
 }
