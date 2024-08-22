@@ -29,6 +29,10 @@ db.ref("/users/" + id).on("value", (data) => {
 })
 
 $(document).ready(()=>{
+  var emailUser = localStorage.getItem("emailUser");
+  if(!emailUser){
+    window.location = '/'
+  }
   $(".pdiv h4").hide()
   $(".pdiv h3").click(function(){
     $(this).find("img").toggleClass('up down');

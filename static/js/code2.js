@@ -12,6 +12,10 @@ const storage = firebase.storage();
 var db = firebase.database();
 
 $(document).ready(() => {
+  var emailUser = localStorage.getItem("emailUser");
+  if(!emailUser){
+    window.location = '/'
+  }
   var id = localStorage.getItem("idUser");
   $("#barraAssinatura").css("width", $("#inputAss").outerWidth() )
   $("#barraAssinatura").progressbar({ value: 0 });

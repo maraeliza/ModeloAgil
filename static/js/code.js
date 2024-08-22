@@ -681,6 +681,11 @@ function entrou(e) {
   }
 }
 $(document).ready(() => {
+
+  var emailUser = localStorage.getItem("emailUser");
+  if(!emailUser){
+    window.location = '/'
+  }
   $("#cpTxt").hide();
   $("#cpBtn").hide();
   $("#desBox").hide();
