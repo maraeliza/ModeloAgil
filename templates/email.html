@@ -65,7 +65,7 @@
   <img id="fundo">
   <img id="fundo2" >
     <div id="expandido" class="contraido menuLateral d-flex flex-column flex-shrink-0 p-3 px-4 bg-dark" style="width: 280px;">
-        <div id="alterarMenu"  class="seta2" onclick="encolher()"> </div>
+        <div title="Clique aqui para encolher o menu" id="alterarMenu"  class="seta2" onclick="encolher()"> </div>
       
         <span  onclick="encolher()" class="d-flex align-items-center headMenu text-decoration-none">
           <img id="imgLogo" class="bi me-2" width="40" height="32" src="../static/imgs/ModeloAgil.png">
@@ -73,19 +73,19 @@
         </span>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
+          <li class="nav-item" >
             <a href="#" class="nav-link">
               <img class="emailLogo" class="bi me-2" width="25" height="25" src="" >
               Enviar emails
             </a>
           </li>
-          <li >
+          <li title="Clique aqui para acessar a FAQ">
             <a href="duvidas.html" class="nav-link">
                 <img class="helpLogo" class="bi me-2" width="25" height="25" src="" >
               Dúvidas?
             </a>
           </li>
-          <li  >
+          <li title="Clique aqui para alterar o tema" >
             <a onclick="mudarTema()" class="nav-link">
                 <img class="temaLogo" class="bi me-2" width="25" height="25" src="" >
                 Tema escuro
@@ -110,10 +110,10 @@
       </div>
 
       <div id="nao_expandido" class="menuLateral d-flex flex-column flex-shrink-0 bg-light px-2">
-        <a  onclick="expandir()" class="d-block p-3 link-dark text-decoration-none"  data-bs-toggle="tooltip" data-bs-placement="right">        
+        <div  onclick="expandir()" class="d-block p-3 link-dark text-decoration-none"  data-bs-toggle="tooltip" data-bs-placement="right">        
             <img  class="bi me-2" width="40" height="32" src="../static/imgs/ModeloAgil.png">
-        </a>
-        <div id="alterarMenu2"  class="seta2" onclick="expandir()"> </div>
+        </div>
+        <div  title="Clique aqui para expandir o menu" id="alterarMenu2"  class="seta2" onclick="expandir()"> </div>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
           <li class="nav-item">
             <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Enviar Emails" data-bs-toggle="tooltip" data-bs-placement="right">
@@ -144,7 +144,7 @@
          
         <h2 class="page-header">
           Contato com fornecedores
-          <button class="delBtn" id="resBtn">
+          <button title="Clique aqui para limpar todos os campos" class="delBtn" id="resBtn">
             <img src="../static/imgs/reset2.png"  />
           </button>
         </h2>
@@ -193,7 +193,7 @@
             </div>
             <div id="toggleBox2">
             <div class="campos" id="camposPersonalizadosBox">
-                <button class="delBtn" id="delCp">
+                <button title="Clique aqui para limpar todos os campos"  class="delBtn" id="delCp">
                   <img src="../static/imgs/lixeira.png"  />
                 </button>
                 <div class="selecao" id="campoBox">

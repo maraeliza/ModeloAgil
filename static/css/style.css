@@ -317,6 +317,9 @@ label {
   position:absolute;
   right:5px;
   top:-10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .delBtn img{
   width:20px;
