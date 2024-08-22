@@ -194,9 +194,6 @@ function enviarEmail(email) {
   var cc = $("#cc").val().replace(/\s+/g, "").split(",");
   var destinatario = $("#destinatario").val().replace(/\s+/g, "").split(",");
 
-
-
-
   var id = localStorage.getItem("idUser");
   db.ref("/users/" + id).on("value", (data) => {
     dados = data.val();
@@ -211,35 +208,41 @@ function enviarEmail(email) {
       destinatario: destinatario,
       userEmail: userEmail,
       userSenha: userSenha,
-      files: files
-    }
+      files: files,
+    };
 
     $.ajax({
       url: "/sendEmail",
       method: "POST",
       data: JSON.stringify(formulario),
-      contentType: 'application/json',
+      contentType: "application/json",
       success: function (data) {
         Swal.close();
         console.log("Recebido de resposta:", data);
         $("#btnEmail").attr("disabled", false);
         console.log("status", data);
-        if (data.result[0] == "success" || data.result[1] == "warn" || data.result[1] == "success") {
-          Swal.fire({
-            icon: "success",
-            title: "Email enviado com sucesso!",
-            confirmButtonText: "Enviar outro e-mail",
-            confirmButtonColor: "#151546",
-            cancelButtonText: "Voltar",
-            cancelButtonColor: "#0070b5",
-            showCancelButton: true,
-            footer:
-              '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              resetar();
-            }
-          });
+        if (data.result) {
+          if (
+            data.result[0] == "success" ||
+            data.result[1] == "warn" ||
+            data.result[1] == "success"
+          ) {
+            Swal.fire({
+              icon: "success",
+              title: "Email enviado com sucesso!",
+              confirmButtonText: "Enviar outro e-mail",
+              confirmButtonColor: "#151546",
+              cancelButtonText: "Voltar",
+              cancelButtonColor: "#0070b5",
+              showCancelButton: true,
+              footer:
+                '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                resetar();
+              }
+            });
+          }
         } else {
           Swal.fire({
             icon: "error",
@@ -564,31 +567,29 @@ function atualizarProgresso(progressoTotal, idBarra) {
 async function addAnexo(newfiles) {
   for (var i = 0; i < newfiles.length; i++) {
     var link = await upFile(newfiles[i]);
-    files.push(link)
+    files.push(link);
   }
-    
 }
 function upFile(file) {
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     var nome = file.name;
     var storageRef = firebase
       .storage()
       .ref("anexos/" + localStorage.getItem("idUser") + "/" + nome);
-  
+
     var uploadTask = storageRef.put(file);
     $("#barraProgresso").progressbar({ value: 0 });
     $("#barraProgresso").show();
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        var progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         progress = Math.round(progress);
         atualizarProgresso(progress, "barraProgresso");
       },
       (error) => {
         console.error("Upload falhou:", error);
-        reject(error)
+        reject(error);
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -601,8 +602,7 @@ function upFile(file) {
         });
       }
     );
-  })
-  
+  });
 }
 
 function attId(idEmail) {
