@@ -1,0 +1,700 @@
+{
+    "fornecedores": [
+        {
+            "id": 1,
+            "nome": "Solucionare",
+            "emails": [
+                {
+                    "id": 1,
+                    "email": "atendimento@solucionare.movidesk.com",
+                    "nome": "Solucionare",
+                    "tipo": "Atendimento Padrão"
+                }
+                
+            ],
+            "tipos": [
+                {
+                    "id": 0,
+                    "assunto": "Template básico",
+                    "template": [
+                        "Bom dia! Tudo bem?",
+                        "","<span style='color:#FFFFFF00'></span>",
+                        "Desde já, agradeço!",
+                        "Qualquer dúvida, estou à disposição.",
+                        "Atenciosamente,",
+                        "[seu_nome]",
+                        "",
+                        "",
+                        "<span style='color:darkred'>Desconsidere o ID e o número do assunto; são apenas para controle interno.</span>",
+                        "[sua_assinatura]"
+                    ],
+                    "campos": [
+                        1
+                    ]
+                },
+                {
+                    "id": 1,
+                    "assunto": "Cadastro de termo monitorado",
+                    "template": [
+                        "Eu gostaria de solicitar o cadastro de termo monitorado.",
+                        "Por favor, nos responda com o id do nome do termo monitorado para podermos cadastrar por aqui."
+                    ],
+                    "campos": [
+                        1,
+                        9,
+                        12
+                    ]
+                },
+                {
+                    "id": 2,
+                    "assunto": "Cadastro de variável em termo monitorado",
+                    "template": [
+                        "Eu gostaria de solicitar o cadastro de variável para o termo monitorado a seguir:"
+                    ],
+                    "campos": [
+                        1,
+                        5,
+                        9,
+                        11
+                    ]
+                },
+                {
+                    "id": 3,
+                    "assunto": "Cadastro de OAB suplementar",
+                    "template": [
+                        "Gostaria de solicitar o cadastro de OAB suplementar. "
+                    ],
+                    "campos": [
+                        1,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id": 4,
+                    "assunto": "Status 'ERRO' no login para coleta de intimações",
+                    "template": [
+                        "Gostaria de relatar um problema que estamos enfrentando ao tentar cadastrar o login do cliente na plataforma Easyjur para a coleta de intimações eletrônicas. <br>",
+                        "As credenciais de acesso do cliente ao tribunal estão corretos, pois testamos diretamente acessando o tribunal. No entanto, o status permanece com ERRO. <br>",
+                        "Por favor, poderiam verificar e nos informar o motivo pelo qual isso está ocorrendo e nos fornecer orientações sobre como proceder para resolver essa questão?"
+                    ],
+                    "campos": [
+                        1,
+                        4,
+                        7,
+                        8
+                    ]
+                },
+                {
+                    "id": 5,
+                    "assunto": "Status 'ERRO' no push de andamentos",
+                    "template": [
+                        "Identificamos um problema com o push, que retornou com status ERRO.",
+                        "Por favor, poderiam verificar e nos informar o motivo pelo qual isso está ocorrendo e nos fornecer orientações sobre como proceder para resolver essa questão?"
+                    ],
+                    "campos": [
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "id": 6,
+                    "assunto": "Status 'VALIDANDO' no push de andamentos",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual o push do processo a seguir está com o status 'VALIDANDO' por mais de 72h."
+                    ],
+                    "campos": [
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "id": 7,
+                    "assunto": "Não coleta de andamentos",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual o andamento do processo a seguir não foi coletado."
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        17
+                    ]
+                },
+                {
+                    "id": 8,
+                    "assunto": "Não coleta de publicações",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a publicação a seguir não foi coletada."
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        3,
+                        17
+                    ]
+                },
+                {
+                    "id": 9,
+                    "assunto": "Não coleta de intimações",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a intimação a seguir não foi coletada.",
+                        
+                        ""
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        4,
+                        17
+                    ]
+                },
+                {
+                    "id": 10,
+                    "assunto": "Atraso na coleta de andamentos",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual o andamento a seguir não foi coletado dentro do prazo"
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        17
+                    ]
+                },
+                {
+                    "id": 11,
+                    "assunto": "Atraso na coleta de publicações",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a publicação a seguir não foi coletada dentro do prazo"
+                    ],
+                    "campos": [
+                        1,
+                        3,
+                        17
+                    ]
+                },
+                {
+                    "id": 12,
+                    "assunto": "Atraso na coleta de intimações",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a intimação a seguir não foi coletada dentro do prazo"
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        4,
+                        17
+                    ]
+                },
+                {
+                    "id": 13,
+                    "assunto": "Integração para coleta de conteúdo",
+                    "template": [
+                        "Eu gostaria de solicitar o desenvolvimento de coleta de conteúdo do sistema a seguir: ",
+                        "Poderia nos informar o prazo para nos dizer se a integração foi aprovada, por gentileza?"
+                    ],
+                    "campos": [
+                        4,
+                        7,
+                        8
+                    ]
+                },
+                {
+                    "id": 14,
+                    "assunto": "Bloqueio de termo na coleta de publicação",
+                    "template": [
+                        "Gostaria de solicitar o bloqueio do termo a seguir da coleta de publicações."
+                    ],
+                    "campos": [
+                        1,
+                        21
+                    ]
+                },
+                {
+                    "id": 15,
+                    "assunto": "Coleta de andamentos indevida",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual o andamento a seguir foi coletado para o nosso cliente"
+                    ],
+                    "campos": [
+                        1,
+                        22
+                    ]
+                },
+                {
+                    "id": 16,
+                    "assunto": "Coleta de publicação indevida",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a publicação a seguir foi coletada para o nosso cliente"
+                    ],
+                    "campos": [
+                        1,
+                        3
+                    ]
+                },
+                {
+                    "id": 17,
+                    "assunto": "Coleta de intimação indevida",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual a intimação foi coletada para o nosso cliente"
+                    ],
+                    "campos": [
+                        1,
+                        23
+                    ]
+                },
+                {
+                    "id": 18,
+                    "assunto": "Publicações sem número de processo",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual as publicações a seguir estão sem número de processo, sendo que este foi mencionado no conteúdo."
+                    ],
+                    "campos": [
+                        1,
+                        3
+                    ]
+                },
+                {
+                    "id": 19,
+                    "assunto": "Status 'ERRO' no login com dupla autenticação",
+                    "template": [
+                        "Gostaríamos de relatar que verificamos as credenciais do cliente no sistema do tribunal e estão corretas, todavia, o status retornou com status ERRO.",
+                        "Por favor, poderiam verificar e nos informar o motivo pelo qual isso está ocorrendo e nos fornecer orientações sobre como proceder para resolver essa questão?"
+                    ],
+                    "campos": [
+                        1,
+                        4,
+                        7,
+                        8,
+                        10
+                    ]
+                },
+                {
+                    "id": 20,
+                    "assunto": "Refinamento de termo monitorado",
+                    "template": [
+                        "Eu gostaria de solicitar o refinamento do seguinte termo monitorado:"
+                    ],
+                    "campos": [
+                        1,
+                        5,
+                        12,
+                        18
+                    ]
+                },
+                {
+                    "id": 20,
+                    "assunto": "Cobrando retorno",
+                    "template": [
+                        "Já faz um tempo desde nossa última comunicação sobre ",
+                        "Gostaria de saber se há alguma atualização ou previsão de resposta.",
+                        "Entendo que o tempo é valioso para todos, mas peço que, se possível, nos envie uma devolutiva o mais breve possível para podermos avançar com o que é necessário.",
+                        "Agradeço antecipadamente pela atenção e fico no aguardo."
+                    
+                    ],
+                    "campos": [
+                        19
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Kurier",
+            "emails": [
+                {
+                    "id": 1,
+                    "email": "atendimento@kurier.com.br",
+                    "nome": "Kurier",
+                    "tipo": "Padrão"
+                }
+            ],
+            "tipos": [
+                {
+                    "id": 0,
+                    "assunto": "Template básico",
+                    "template": [
+                        "Bom dia! Tudo bem?",
+                        "","","<span style='color:#FFFFFF00'></span>","",
+                        "Desde já, agradeço!",
+                        "Qualquer dúvida, estou à disposição.",
+                        "Atenciosamente,",
+                        "[seu_nome]",
+                        "",
+                        "",
+                        "<span style='color:darkred'>Solicitamos a gentileza de desconsiderar o id e o número mencionados no assunto deste e-mail, uma vez que são utilizados apenas para fins de controle interno.</span>",
+                        "[sua_assinatura]"
+                    ],
+                    "campos": [
+                        1
+                    ]
+                },
+                {
+                    "id": 1,
+                    "assunto": "Não coleta de processo distribuído",
+                    "template": [
+                        "O nosso cliente relatou que não houve coleta de um processo distribuído para o termo monitorado: ",
+                        "Gostaríamos de saber o motivo pelo qual esse processo distribuído não foi coletado pelo sistema para informar nosso cliente."
+                    ],
+                    "campos": [
+                        1,
+                        2,
+                        9,
+                        17,
+                        20,
+                        15
+                    ]
+                },
+                {
+                    "id": 2,
+                    "assunto": "Dúvida sobre distribuição de processos",
+                    "template": [
+                    ],
+                    "campos": []
+                },
+                {
+                    "id": 3,
+                    "assunto": "Cadastro de termo monitorado para distribuição de processos",
+                    "template": [
+                        "Gostaria de solicitar o cadastro do seguinte termo monitorado para coleta de processos distribuídos:"
+                    ],
+                    "campos": [
+                        1,
+                        20
+                    ]
+                },
+                {
+                    "id": 4,
+                    "assunto": "Cadastro de CNPJ para coleta de processos distribuídos",
+                    "template": [
+                        "Gostaria de solicitar o cadastro do CNPJ a seguir como variação do termo monitorado para coleta de processos distribuídos:"
+                    ],
+                    "campos": [
+                        1,
+                        15,
+                        20
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Asaas",
+            "emails": [
+                {
+                    "id": 1,
+                    "email": "contato@asaas.com.br",
+                    "nome": "Padrão",
+                    "tipo": "Dúvidas e demandas comerciais"
+                },
+                {
+                    "id": 2,
+                    "email": "joana.campos@asaas.com.br",
+                    "nome": "Joana",
+                    "tipo": "Analista"
+                },
+                {
+                    "id": 3,
+                    "email": "leticia.rocha@asaas.com.br",
+                    "nome": "Letícia",
+                    "tipo": "API"
+                },
+                
+                {
+                    "id": 5,
+                    "email": "integracoes@asaas.com.br",
+                    "nome": "Integração",
+                    "tipo": "Problemas com API do Asaas"
+                },
+                {
+                    "id": 6,
+                    "email": "fernanda.monteiro@asaas.com.br",
+                    "nome": "Fernanda",
+                    "tipo": "Gerente de contas"
+                }
+            ],
+            "tipos": [
+                {
+                    "id": 0,
+                    "assunto": "Template básico",
+                    "template": [
+                        "Bom dia! Tudo bem?","<span style='color:#FFFFFF00'></span>",
+                        "Desde já, agradeço!",
+                        "Qualquer dúvida, estou à disposição.",
+                        "Atenciosamente,",
+                        "[seu_nome]",
+                        "<span style='color:darkred'>Solicitamos a gentileza de desconsiderar o id e o número mencionados no assunto deste e-mail, uma vez que são utilizados apenas para fins de controle interno.</span>",
+                        "[sua_assinatura]"
+                    ],
+                    "campos": [
+                        15
+                    ]
+                },
+                {
+                    "id": 1,
+                    "assunto": "Erro na emissão de nota fiscal",
+                    "template": [
+                        "Gostaria de solicitar, por gentileza, a verificação e correção de um erro na emissão de uma nota fiscal.",
+                        "Verificamos que a emissão retornou com erro pela API de vocês.",
+                        "Por favor, poderia a equipe revisar e nos informar o que precisamos fazer para proceder com a correção necessária?"
+                    ],
+                    "campos": [
+                        15,
+                        26,
+                        16,
+                        17
+                    ]
+                },
+                {
+                    "id": 2,
+                    "assunto": "Emissão de boleto",
+                    "template": [
+                        
+                    ],
+                    "campos": [
+                        15
+                    ]
+                },
+                {
+                    "id": 3,
+                    "assunto": "Solicitação de aumento de limite",
+                    "template": [
+                        "Gostaria de solicitar aumento de limite para a conta do nosso cliente."
+                    ],
+                    "campos": [
+                        14,
+                        15
+                    ]
+                },
+                {
+                    "id": 4,
+                    "assunto": "Outros",
+                    "template": [
+                    ],
+                    "campos": [
+                        15
+                    ]
+                },
+                {
+                    "id": 5,
+                    "assunto": "Alteração de dados cadastrados ",
+                    "template": [
+                        "Gostaríamos de solicitar a alteração dos dados do nosso cliente"
+                    ],
+                    "campos": [
+                        15
+                    ]
+                }
+            ]
+        }
+    ],
+    "solicitantes": [
+        {
+            "id": 0,
+            "nome": "Cliente",
+            "email": "cliente"
+        },
+        {
+            "id": 1,
+            "nome": "EasyJur",
+            "email": "ej"
+        },
+        {
+            "id": 2,
+            "nome": "Gabriela Dutra",
+            "email": "gdutra@easyjur.com"
+        },
+        {
+            "id": 3,
+            "nome": "Isabela Grizante",
+            "email": "igrizante@easyjur.com"
+        },
+        {
+            "id": 4,
+            "nome": "Raiany Araújo",
+            "email": "raraujo@easyjur.com"
+        },
+        
+        {
+            "id": 5,
+            "nome": "Mara Eliza",
+            "email": "meliza@easyjur.com"
+        },
+        {
+            "id": 6,
+            "nome": "Sandrey Aragão",
+            "email": "saragao@easyjur.com"
+        },
+        {
+            "id": 7,
+            "nome": "Júlia Barcelos",
+            "email": "jbarcelos@easyjur.com"
+        },
+        {
+            "id": 8,
+            "nome": "Dhiego Gaia",
+            "email": "dgaia@easyjur.com"
+        },
+        {
+            "id": 9,
+            "nome": "Gabriel Alexandre",
+            "email": "galexandre@easyjur.com"
+        },
+        {
+            "id": 10,
+            "nome": "Marcelia Dias",
+            "email": "mdias@easyjur.com"
+        },
+        {
+            "id": 11,
+            "nome": "Eduardo Cardoso",
+            "email": "ecardoso@easyjur.com"
+        },
+        {
+            "id": 12,
+            "nome": "Camila Abreu",
+            "email": "cabreu@easyjur.com"
+        },
+        {
+            "id": 13,
+            "nome": "Paloma Rosa",
+            "email": "prosa@easyjur.com"
+        },
+        {
+            "id": 14,
+            "nome": "Igor Rodrigues",
+            "email": "irodrigues@easyjur.com"
+        }
+    ],
+    "campos": [
+        {
+            "id": 1,
+            "nome": "ID EMPRESA",
+            "idElemento": "idEmpresa"
+        },
+        {
+            "id": 2,
+            "nome": "Número do Processo",
+            "idElemento": "numProcesso"
+        },
+        {
+            "id": 3,
+            "nome": "Código da Publicação",
+            "idElemento": "codPublicacao"
+        },
+        {
+            "id": 4,
+            "nome": "Tribunal",
+            "idElemento": "tribunal"
+        },
+        {
+            "id": 5,
+            "nome": "ID NOME",
+            "idElemento": "idNome"
+        },
+        {
+            "id": 6,
+            "nome": "OAB SUPLEMENTAR",
+            "idElemento": "oabSuplementar"
+        },
+        {
+            "id": 7,
+            "nome": "LOGIN",
+            "idElemento": "loginTribunal"
+        },
+        {
+            "id": 8,
+            "nome": "SENHA",
+            "idElemento": "senhaTribunal"
+        },
+        {
+            "id": 9,
+            "nome": "TERMO MONITORADO",
+            "idElemento": "termoCaixa"
+        },
+        {
+            "id": 10,
+            "nome": "CÓDIGO ALFANUMÉRICO",
+            "idElemento": "codAlfa"
+        },
+        {
+            "id": 11,
+            "nome": "VARIÁVEL",
+            "idElemento": "variável"
+        },
+        {
+            "id": 12,
+            "nome": "NOME",
+            "idElemento": "nomeCaixa"
+        },
+        {
+            "id": 13,
+            "nome": "Data da última coleta",
+            "idElemento": "dataCaixa"
+        },
+        {
+            "id": 14,
+            "nome": "CPF",
+            "idElemento": "cpfCaixa"
+        },
+        {
+            "id": 15,
+            "nome": "CNPJ",
+            "idElemento": "cnpjCaixa"
+        },
+        {
+            "id": 16,
+            "nome": "Nota fiscal",
+            "idElemento": "nfCaixa"
+        },
+        {
+            "id": 17,
+            "nome": "Data",
+            "idElemento": "dataCaixa2"
+        },
+        {
+            "id": 18,
+            "nome": "OAB",
+            "idElemento": "oab"
+        },
+        {
+            "id": 19,
+            "nome": "TEMA",
+            "idElemento": "tema"
+        },
+        {
+            "id": 20,
+            "nome": "Razão Social",
+            "idElemento": "rsCaixa"
+        },
+        {
+            "id": 21,
+            "nome": "Termo",
+            "idElemento": "termoCaixa2"
+        },
+        {
+            "id": 22,
+            "nome": "Andamento",
+            "idElemento": "andCaixa"
+        },
+        {
+            "id": 23,
+            "nome": "Intimação",
+            "idElemento": "intCaixa"
+        },
+        {
+            "id": 24,
+            "nome": "ID do pagamento",
+            "idElemento": "idPagCaixa"
+        },
+        {
+            "id": 25,
+            "nome": "ID da receita",
+            "idElemento": "idRecCaixa"
+        },
+        {
+            "id": 26,
+            "nome": "ID da nota fiscal",
+            "idElemento": "idNFCaixa"
+        }
+    ]
+}
