@@ -113,13 +113,27 @@ $(document).ready(function() {
 
     $("#addEmail").on("input", function() {
         if($(this).val().length > 0){
-            
-            if($(this).val().includes("@easyjur.com")){
-                pE=2
-                $("#erroCadastro").text('')
-            }else{
-                pE = 1
-            }
+            db.ref("/users/").on("value", (data)=>{
+                var dados = data.val()
+                var jaExiste = false;
+                for(var i in dados){
+                    if(dados[i].email == $("#addEmail").val()){
+                        $("#erroCadastro").text("E-mail já está cadastrado!")
+                        $("#erroCadastro").show()
+                        jaExiste = true;
+                        break;
+                    }
+                }
+                if(!jaExiste){
+                    if($(this).val().includes("@easyjur.com")){
+                        pE=2
+                        $("#erroCadastro").text('')
+                    }else{
+                        pE = 1
+                    }
+                }
+            })
+           
         }else{
             pE = 0;
         }
@@ -184,22 +198,36 @@ $("#proximo").click(()=>{
         var pw2 = $("#addSenha2").val()
         if(password == pw2){
             if(email && password && pw2){
-                if(email.includes("@easyjur.com")){
-                    $("#proximo").text("Anterior");
-                    $("#caixaEmail").hide();
-                    $("#caixaSenha").hide();
-                    $("#caixaSenha2").hide();
-                    $("#caixaNome").show();
-                    $("#criar").show();
-                    $("#erroCadastro").text('')
-                }else{
-                    swal({
-                        title:"E-mail inválido!",
-                        text:"Verifique se o e-mail informado é do domínio easyjur.com",
-                        confirmButtonText:"Tentar novamente!"
-                    })
-                    $("#erroCadastro").text("Verifique se o e-mail informado é do domínio easyjur.com")
-                }
+                db.ref("/users/").on("value", (data)=>{
+                    var dados = data.val()
+                    var jaExiste = false;
+                    for(var i in dados){
+                        if(dados[i].email == email){
+                            $("#erroCadastro").text("E-mail já está cadastrado!")
+                            jaExiste = true;
+                            break;
+                        }
+                    }
+                    if(!jaExiste){
+                        if(email.includes("@easyjur.com")){
+                            $("#proximo").text("Anterior");
+                            $("#caixaEmail").hide();
+                            $("#caixaSenha").hide();
+                            $("#caixaSenha2").hide();
+                            $("#caixaNome").show();
+                            $("#criar").show();
+                            $("#erroCadastro").text('')
+                        }else{
+                            swal({
+                                title:"E-mail inválido!",
+                                text:"Verifique se o e-mail informado é do domínio easyjur.com",
+                                confirmButtonText:"Tentar novamente!"
+                            })
+                            $("#erroCadastro").text("Verifique se o e-mail informado é do domínio easyjur.com")
+                        }                    
+                    }
+                })
+                
                 
             }else{
                 $("#erroCadastro").text("Preencha todos os campos!")
@@ -230,15 +258,32 @@ function criarConta(){
     var password2 = document.getElementById("addSenha2").value;
     
     if(nome && email && password && password2){
+
         if(password2 == password){
-            var id = (Math.random().toFixed(10) * 1000000000000).toString();
-            db.ref("/users/"+id).set({
-                email: email.toLowerCase(),
-                senha: password,
-                id: id,
-                nome:nome
+            db.ref("/users/").on("value", (data)=>{
+                var dados = data.val()
+                var jaExiste = false;
+                for(var i in dados){
+                    if(dados[i].email == email){
+                        $("#erroCadastro").text("E-mail ja existe!")
+                        jaExiste = true;
+                        break;
+                    }
+                
+                       
+                }
+                if(!jaExiste){
+                    var id = (Math.random().toFixed(10) * 1000000000000).toString();
+                    db.ref("/users/"+id).set({
+                        email: email.toLowerCase(),
+                        senha: password,
+                        id: id,
+                        nome:nome
+                    })
+                    window.location.reload();       
+                }
             })
-            window.location.reload();
+            
         }else{
             $("#addSenha").val("");
             $("#addSenha2").val("");

@@ -63,7 +63,9 @@ body{
 
   text-align: center;
   padding: 30px;
-  padding-top: 50px;
+  display: grid;
+  align-items: center;
+
 }
 #texto {
   font-size: 20px;
@@ -107,6 +109,8 @@ body{
   box-sizing: border-box;
   height: 100%;
   width: 50%;
+  display: grid;
+  align-items: center;
 }
 .side-left-div h3 {
   color: #00002c;
