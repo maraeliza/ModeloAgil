@@ -23,7 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 40% !important;
+  height: 50% !important;
   width: 60%;
   background-color: #00002c36;
   border-radius: 30px;
