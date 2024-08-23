@@ -202,7 +202,7 @@ $("#proximo").click(()=>{
                     var dados = data.val()
                     var jaExiste = false;
                     for(var i in dados){
-                        if(dados[i].email == email){
+                        if(dados[i].email == email ){
                             $("#erroCadastro").text("E-mail já está cadastrado!")
                             jaExiste = true;
                             break;
@@ -265,7 +265,7 @@ function criarConta(){
                 var jaExiste = false;
                 for(var i in dados){
                     if(dados[i].email == email){
-                        $("#erroCadastro").text("E-mail ja existe!")
+                        $("#erroCadastro").text("E-mail já existe!")
                         jaExiste = true;
                         break;
                     }
@@ -273,6 +273,7 @@ function criarConta(){
                        
                 }
                 if(!jaExiste){
+                    $("#erroCadastro").text("")
                     var id = (Math.random().toFixed(10) * 1000000000000).toString();
                     db.ref("/users/"+id).set({
                         email: email.toLowerCase(),

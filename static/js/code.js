@@ -50,7 +50,7 @@ function attAssunto(assunto) {
 function resetar() {
   deleteFiles(files)
   files = [];
-  $(".prevAnex").empty();
+  $(".prevAnex label").remove();
 
   $("#camposPersonalizadosBox input").val("");
 
@@ -101,7 +101,6 @@ function montarTemplate(template1, template2) {
   var userDados;
   db.ref("/users/" + id).on("value", (data) => {
     userDados = data.val();
-    console.log(userDados)
     if(userDados == null || userDados.email==undefined || userDados.email==null || userDados.email== '' || !userDados.id){
       window.location = '/'
     }
@@ -225,7 +224,7 @@ function enviarEmail(email) {
         console.log("Recebido de resposta:", data);
         $("#btnEmail").attr("disabled", false);
         console.log("status", data);
-        deleteFiles(files)
+        
         if (data.result) {
           if (
             data.result[0] == "success" ||
@@ -249,6 +248,7 @@ function enviarEmail(email) {
             });
           }else {
             deleteFiles(files)
+            files = []
             Swal.fire({
               icon: "error",
               title: data.result[0],
@@ -257,6 +257,7 @@ function enviarEmail(email) {
           }
         } else {
           deleteFiles(files)
+          files = []
           Swal.fire({
             icon: "error",
             title: data[0],
@@ -269,6 +270,7 @@ function enviarEmail(email) {
         console.error("Requisição para a API falhou");
         console.log("textStatus", textStatus);
         deleteFiles(files)
+        files = []
         // Exibir mensagem de erro para o usuário ou realizar outra ação
         Swal.fire({
           icon: "error",
@@ -593,7 +595,7 @@ function upFile(file) {
     var nome = file.name;
     var storageRef = firebase
       .storage()
-      .ref("anexos/" + localStorage.getItem("idUser") + "/" + nome);
+      .ref("anexos/" + localStorage.getItem("idUser") + "/" +new Date().getTime() +"-"+ nome);
 
     var uploadTask = storageRef.put(file);
    
@@ -649,6 +651,8 @@ function deleteFiles(fileURLs) {
   Promise.all(deletePromises)
     .then(() => {
       console.log("Todos os arquivos foram apagados com sucesso.");
+      $(".prevAnex label").remove();
+
     })
     .catch((error) => {
       console.error("Erro ao apagar alguns arquivos:", error);
@@ -719,8 +723,8 @@ $(document).ready(() => {
   var editor = $("#email").cleditor();
   var $iframe = $(editor[0].$frame);
   $(".dragover-area").css({
-    width: $(".cleditorMain").width(),
-    height: $(".cleditorMain").height(),
+    width: $(".emailBox").width(),
+    height: $(".emailBox").height(),
   });
   $(window).on("resize", function () {
     $(".cleditorMain").css({
