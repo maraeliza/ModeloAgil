@@ -56,7 +56,7 @@ function resetar() {
 
   esconderFilhos("camposPersonalizadosBox");
   $("#alertMsg").text("");
-  $("#solOp").val("").trigger("change");
+  $("#solOp").val(0).trigger("change");
   $("#desOp").val(0).trigger("change");
   $("#forOp").val(0).trigger("change");
   $("#tipOp").val(0).trigger("change");
@@ -101,7 +101,10 @@ function montarTemplate(template1, template2) {
   var userDados;
   db.ref("/users/" + id).on("value", (data) => {
     userDados = data.val();
-    localStorage.setItem("emailUser", userDados.email);
+    console.log(userDados)
+    if(userDados == null || userDados.email==undefined || userDados.email==null || userDados.email== '' || !userDados.id){
+      window.location = '/'
+    }
     if (userDados.fundo) {
       $("#fundo").attr("src", userDados.fundo.url);
       $("#fundo").css("opacity", 1);
@@ -521,7 +524,7 @@ function definirCampos(data) {
         "</option>"
     );
   }
-
+  
   fornecedores.forEach((forn) => {
     $("#forOp").append(
       '<option value="' + forn.id + '">' + forn.nome + "</option>"
@@ -683,7 +686,8 @@ function entrou(e) {
 $(document).ready(() => {
 
   var emailUser = localStorage.getItem("emailUser");
-  if(!emailUser){
+  var idUser = localStorage.getItem("idUser");
+  if(!emailUser || !idUser){
     window.location = '/'
   }
   $("#cpTxt").hide();
@@ -888,6 +892,8 @@ $(document).ready(() => {
         if (idFor != 0) {
           var forn = fornecedores.find((forn) => forn.id == idFor);
           if (forn.emails) {
+            $("#desOp").empty()
+          
             forn.emails.forEach((email) => {
               $("#desOp").append(
                 '<option value="' +
