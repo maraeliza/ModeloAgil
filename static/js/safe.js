@@ -65,6 +65,33 @@ function login() {
 
 }
 $(document).ready(function() {
+    function atualizarProgresso(id) {
+        // Calcula o progresso total
+        var progressoTotal = (pN  + pS + pE + pS2) * 100/6;
+        if(progressoTotal > 0){
+            // Garante que o valor não ultrapasse 100
+            if (progressoTotal > 100) {
+                progressoTotal = 100;
+            }
+            $("#"+id).progressbar("value", progressoTotal);
+      
+            var cor;
+            if (progressoTotal <= 25) {
+                cor = '#ff0000'; // Vermelho
+            } else if (progressoTotal <= 50) {
+                cor = '#ffa500'; // Laranja
+            } else if (progressoTotal <= 75) {
+                cor = '#90ee90'; // Verde claro
+            } else {
+                cor = '#4caf50'; // Verde escuro para 75-100%
+            }
+            $("#"+id+" .ui-progressbar-value").css('background', cor);
+            $("#"+id).show()
+        }else{
+            $("#"+id).hide()
+        }
+        
+      }
     $( document ).tooltip();
     $("#barraProgresso").hide()
     // Inicialize a barra de progresso
@@ -119,6 +146,7 @@ $(document).ready(function() {
          atualizarProgresso("barraProgresso");
     });
 });
+
 $("#criarDiv").hide();
 
 var loginExibido = true;
