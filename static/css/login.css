@@ -23,6 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 40% !important;
   width: 60%;
   background-color: #00002c36;
   border-radius: 30px;
@@ -167,7 +168,7 @@ label {
 
 @media (min-width: 993px) {
   .container-login {
-    height: 60%;
+    height: 50%;
   }
 }
 

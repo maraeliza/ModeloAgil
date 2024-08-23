@@ -716,7 +716,7 @@ $(document).ready(() => {
   $("#idEmBox").hide();
   $(".dragover-area").hide();
 
-  $("#barraProgresso").css("width", $("#cc").outerWidth());
+  $("#barraProgresso").css("width", $(".prevAnex").outerWidth());
   $("#barraProgresso").progressbar({ value: 0 });
   $("#barraProgresso").hide();
 
@@ -735,7 +735,7 @@ $(document).ready(() => {
       width: $(".emailBox").width(),
       height: $(".emailBox").height(),
     });
-    $("#barraProgresso").css("width", $("#cc").outerWidth());
+    $("#barraProgresso").css("width", $(".prevAnex").outerWidth());
     editor = $("#email").cleditor();
     $iframe = $(editor[0].$frame);
     $iframe.contents().on("dragenter dragover", function (e) {
