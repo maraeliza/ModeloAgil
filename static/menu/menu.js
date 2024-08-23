@@ -128,11 +128,9 @@ $(document).ready(() => {
     temaEscuro = data.val();
     if (temaEscuro) {
 
-      $("#cpBtn").css("background-color", "#0078AD");
-      $("#cpBtn").css("color", "#FFF");
+      $("#cpBtn").css("background-color", "#2784B1");
+      $("#btnEmail").css("background-color", "#2784B1");
 
-      $("#btnEmail").css("background-color", "#0078AD");
-      $("#btnEmail").css("color", "#FFF");
 
       $("#expandido").removeClass("claro");
       $("#expandido").addClass("escuro");
@@ -163,13 +161,11 @@ $(document).ready(() => {
 
       $("#salvar").removeClass("btn-escuro");
       $("#salvar").addClass("btn-claro");
-      $("#salvar").css("color", "#FFF !important");
-
+      
       $(".dropdown-menu").removeClass("light");
       $(".dropdown-menu").addClass("dark");
       $(".pdiv").css("color", "#FFF");
       $("#msg").css("color", "#FFF");
-      $("#salvar img").attr("src", "../static/imgs/salvar_blue.png");
       $(".btnSair img").attr("src", "../static/imgs/share2.png");
       $(".btnSair a").removeClass("dark");
       $(".btnSair a").addClass("light");
@@ -178,11 +174,9 @@ $(document).ready(() => {
       $(".labAnex").css("color", "#151546");
     } else {
       $(".labAnex").css("color", "#FFF");
+      
       $("#cpBtn").css("background-color", "#151546");
-      $("#cpBtn").css("color", "#FFF");
-
       $("#btnEmail").css("background-color", "#151546");
-      $("#btnEmail").css("color", "#FFF");
 
 
       $(".pdiv").css("color", "#00002C");
@@ -195,11 +189,10 @@ $(document).ready(() => {
 
       $(".dropdown-menu").removeClass("dark");
       $(".dropdown-menu").addClass("light");
-      $("#salvar").css("color", "#00002C !important");
+    
       $("#salvar").removeClass("btn-claro");
       $("#salvar").addClass("btn-escuro");
-      $("#salvar img").attr("src", "../static/imgs/salvar_white.png");
-
+      
       $("#expandido").removeClass("escuro");
       $("#expandido").addClass("claro");
 
