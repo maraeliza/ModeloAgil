@@ -74,7 +74,7 @@ body{
   margin: auto;
 }
 #alternar {
-  background-color: #f31f3d;
+  background-color: #E5293F;
   color: white;
   font-weight: bold;
   width: 80%;
@@ -85,7 +85,7 @@ body{
 }
 
 #alternar:hover {
-  background-color: #f16174;
+  background-color: #df5666;
 }
 .side-left-div hr {
   width: 80%;
@@ -141,7 +141,7 @@ label {
 }
 
 .ui-progressbar {
-  height: 20px; /* Ajuste a altura da barra */
+  height: 10px; /* Ajuste a altura da barra */
 }
 
 .ui-progressbar .ui-progressbar-value {

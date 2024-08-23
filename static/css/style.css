@@ -347,7 +347,3 @@ label {
 .ui-progressbar-value{
   padding-bottom:1px !important;
 }
-.ui-corner-all, .ui-widget, .ui-widget-content{
-  padding:0px !important;
-  background-color: #ffffff5b;
-}
