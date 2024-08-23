@@ -247,6 +247,13 @@ function enviarEmail(email) {
                 resetar();
               }
             });
+          }else {
+            deleteFiles(files)
+            Swal.fire({
+              icon: "error",
+              title: data.result[0],
+              text: data.result[1],
+            });
           }
         } else {
           deleteFiles(files)

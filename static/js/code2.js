@@ -121,10 +121,13 @@ $(document).ready(() => {
     })
   });
   $("#salvar").click(() => {
+    var erro = false;
     if ($("#nome").val() != "") {
       db.ref("/users/" + id).update({
         nome: $("#nome").val(),
       });
+      mostrarMensagem("Nome alterado com sucesso", "#00905F");
+      erro = false;
     }
     if ($("#email").val() != "") {
       if (
@@ -132,10 +135,34 @@ $(document).ready(() => {
         $("#email").val().includes(".com")
       ) {
         if ($("#email").val().includes("easyjur")) {
-          db.ref("/users/" + id).update({
-            email: $("#email").val(),
-          });
+          db.ref("/users/").on("value", (data)=>{
+            var users = data.val();
+            var jaExiste = false
+            for(var i in users){
+              if(users[i].email == $("#email").val()){
+                if(users[i].email != userDados.email){
+                  mostrarMensagem(
+                    "Não foi possível alterar o e-mail, pois o e-mail informado está em uso",
+                    "orange"
+                  );
+                  erro = true;
+                  $("#email").val(userDados.email);
+                  jaExiste = true;
+                  break;
+                }
+              }
+            }
+            if(!jaExiste){
+              db.ref("/users/" + id).update({
+                email: $("#email").val(),
+              });
+              mostrarMensagem("Email alterado com sucesso", "#00905F");
+              erro = false;
+            }
+          })
+          
         } else {
+          erro = true;
           mostrarMensagem(
             "Não foi possível alterar o e-mail, pois deve ser um e-mail do EasyJur",
             "orange"
@@ -143,6 +170,7 @@ $(document).ready(() => {
           $("#email").val(userDados.email);
         }
       } else {
+        erro = true;
         mostrarMensagem(
           "Não foi possível alterar o e-mail, pois o e-mail informado é inválido",
           "orange"
@@ -155,12 +183,17 @@ $(document).ready(() => {
       db.ref("/users/" + id).update({
         senha: $("#senha").val(),
       });
+      mostrarMensagem("Senha alterada com sucesso", "#00905F");
+      erro = false;
     }
-    if($("#labelMsg").text().includes("Não") == false){
-      swal({
-        title:"Alterações feitas com sucesso!"
-      })
-    }
+    setTimeout(()=>{
+      if(!erro){
+        swal({
+          title:"Alterações feitas com sucesso!"
+        })
+      }
+    }, 1000)
+
   });
   
 });
