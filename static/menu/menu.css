@@ -9,10 +9,10 @@
 
 #expandido {
   z-index: 9999;
-  width:280px;
+  width: 280px;
   transition: width 0.4s ease;
 }
-#nao_expandido{
+#nao_expandido {
   transition: width 0.4s ease;
 }
 #nomeUser {
@@ -40,14 +40,15 @@
   font-weight: bold;
 }
 
-.nav-link:hover, .dropdown-item:hover{
+.nav-link:hover,
+.dropdown-item:hover {
   scale: 1.03;
   transition: 0.3s;
-  background-color: #8781b52a !important; 
+  background-color: #8781b52a !important;
 }
 .nav-link {
   font-size: 18px;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 #fundo {
@@ -76,26 +77,24 @@
   margin-top: 50px;
   box-shadow: 0px 0px 10px #00003d38;
   transition: margin-left 0.4s ease, width 0.4s ease;
-  width:80%;
-  margin-left:"auto";
-  margin-right:"auto";
-  
+  width: 80%;
+  margin-left: "auto";
+  margin-right: "auto";
 }
 
 .dropdown-item {
-  padding:5px; 
+  padding: 5px;
   font-size: 16px;
   margin-top: 0px;
 }
 .dropdown-menu {
   width: 100%;
-  
 }
-.dropdown-menu.dark{
-  background-color: #0F0F18 !important;
+.dropdown-menu.dark {
+  background-color: #0f0f18 !important;
 }
 
-.dropdown-menu.dark{
+.dropdown-menu.dark {
   background-color: #f2f2f2;
 }
 
@@ -144,27 +143,24 @@
   scale: 1.1;
 }
 
-#nomeUser{
+#nomeUser {
   padding-left: 10px;
 }
-.fundo-escuro{
-  background-color: #0F0F18;
-
+.fundo-escuro {
+  background-color: #0f0f18;
 }
 
-.fundo-claro{
-  background-color: #F4F4F4;
+.fundo-claro {
+  background-color: #f4f4f4;
 }
-body{
+body {
   font-family: "Roboto", sans-serif;
-
 }
 
-.btn-escuro{
+.btn-escuro {
   background-color: #151546 !important;
-  color:white !important;
+  color: white !important;
 }
-.btn-claro{
-  background-color: #2784B1 !important;
-
+.btn-claro {
+  background-color: #2784b1 !important;
 }

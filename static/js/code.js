@@ -16,6 +16,8 @@ var fornecedores = [];
 var solicitantes = [];
 var idFor = 0;
 
+
+
 function esconderFilhos(pai) {
   cpBox = $("#" + pai);
   cpBox.hide();
@@ -37,7 +39,7 @@ function attAssunto(assunto) {
     texto += "id_ti: " + idEmail + "]";
   } else {
     emailUser = localStorage.getItem("emailUser");
-    if (emailUser == "meliza@easyjur.com") {
+    if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
       texto += "id_ag: " + idEmail + "]";
     } else {
       texto = "";
@@ -84,7 +86,7 @@ function resetar() {
     "[sua_assinatura]",
   ];
   $("#btnEmail").attr("disabled", true);
-  montarTemplate(template, []);
+  montarTemplate(userDados, template, []);
   $("html, body").animate({ scrollTop: 0 }, "fast");
 }
 
@@ -96,53 +98,48 @@ function limparEditor() {
   return ed;
 }
 
-function montarTemplate(template1, template2) {
-  var id = localStorage.getItem("idUser");
-  var userDados;
-  db.ref("/users/" + id).on("value", (data) => {
-    userDados = data.val();
-    if(userDados == null || userDados.email==undefined || userDados.email==null || userDados.email== '' || !userDados.id){
-      window.location = '/'
-    }
-    if (userDados.fundo) {
-      $("#fundo").attr("src", userDados.fundo.url);
-      $("#fundo").css("opacity", 1);
+function montarTemplate(userDados, template1, template2) {
 
-      $("#fundo2").attr("src", userDados.fundo.url);
-      $("#fundo2").css("opacity", 1);
-    }
-    $("#nomeUser").text(userDados.nome);
-    ed = limparEditor();
-    var template = [];
-    template.push(template1[0]);
-    template.push(template1[1]);
 
-    for (var i = 0; i < template1.length; i++) {
-      if (template1[i] == "[seu_nome]") {
-        template1[i] = userDados.nome;
-      } else if (template1[i] == "[sua_assinatura]") {
-        if (userDados.assinatura) {
-          template1[i] = "<img src='" + userDados.assinatura.url + "'>";
-        } else {
-          template1[i] = "";
-        }
+  if (userDados.fundo) {
+    $("#fundo").attr("src", userDados.fundo.url);
+    $("#fundo").css("opacity", 1);
+
+    $("#fundo2").attr("src", userDados.fundo.url);
+    $("#fundo2").css("opacity", 1);
+  }
+  $("#nomeUser").text(userDados.nome);
+  ed = limparEditor();
+  var template = [];
+  template.push(template1[0]);
+  template.push(template1[1]);
+
+  for (var i = 0; i < template1.length; i++) {
+    if (template1[i] == "[seu_nome]") {
+      template1[i] = userDados.nome;
+    } else if (template1[i] == "[sua_assinatura]") {
+      if (userDados.assinatura) {
+        template1[i] = "<img src='" + userDados.assinatura.url + "'>";
+      } else {
+        template1[i] = "";
       }
     }
-    template2.forEach((linha) => {
-      template.push(linha);
-    });
-    for (var i = 2; i < template1.length; i++) {
-      template.push(template1[i]);
-    }
-
-    template.forEach((linha) => {
-      var texto = ed.$area.val() + linha + "<br>";
-      ed.$area.val(texto);
-
-      ed.updateFrame();
-    });
-    //mudarCor("valores", "#FFFFFF00");
+  }
+  template2.forEach((linha) => {
+    template.push(linha);
   });
+  for (var i = 2; i < template1.length; i++) {
+    template.push(template1[i]);
+  }
+
+  template.forEach((linha) => {
+    var texto = ed.$area.val() + linha + "<br>";
+    ed.$area.val(texto);
+
+    ed.updateFrame();
+  });
+  //mudarCor("valores", "#FFFFFF00");
+
 }
 function definirTipo() {
   var desEmail = $("#desOp").val();
@@ -198,90 +195,89 @@ function enviarEmail(email) {
   var destinatario = $("#destinatario").val().replace(/\s+/g, "").split(",");
 
   var id = localStorage.getItem("idUser");
-  db.ref("/users/" + id).on("value", (data) => {
-    dados = data.val();
 
-    var userEmail = dados.email;
-    var userSenha = dados.senha;
 
-    var formulario = {
-      assunto: assunto,
-      email: email,
-      cc: cc,
-      destinatario: destinatario,
-      userEmail: userEmail,
-      userSenha: userSenha,
-      files: files,
-    };
+  var userEmail = userDados.email;
+  var userSenha = userDados.senha;
 
-    $.ajax({
-      url: "/sendEmail",
-      method: "POST",
-      data: JSON.stringify(formulario),
-      contentType: "application/json",
-      success: function (data) {
-        Swal.close();
-        console.log("Recebido de resposta:", data);
-        $("#btnEmail").attr("disabled", false);
-        console.log("status", data);
-        
-        if (data.result) {
-          if (
-            data.result[0] == "success" ||
-            data.result[1] == "warn" ||
-            data.result[1] == "success"
-          ) {
-            Swal.fire({
-              icon: "success",
-              title: "Email enviado com sucesso!",
-              confirmButtonText: "Enviar outro e-mail",
-              confirmButtonColor: "#151546",
-              cancelButtonText: "Voltar",
-              cancelButtonColor: "#0070b5",
-              showCancelButton: true,
-              footer:
-                '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                resetar();
-              }
-            });
-          }else {
-            deleteFiles(files)
-            files = []
-            Swal.fire({
-              icon: "error",
-              title: data.result[0],
-              text: data.result[1],
-            });
-          }
+  var formulario = {
+    assunto: assunto,
+    email: email,
+    cc: cc,
+    destinatario: destinatario,
+    userEmail: userEmail,
+    userSenha: userSenha,
+    files: files,
+  };
+
+  $.ajax({
+    url: "/sendEmail",
+    method: "POST",
+    data: JSON.stringify(formulario),
+    contentType: "application/json",
+    success: function (data) {
+      Swal.close();
+      console.log("Recebido de resposta:", data);
+      $("#btnEmail").attr("disabled", false);
+      console.log("status", data);
+
+      if (data.result) {
+        if (
+          data.result[0] == "success" ||
+          data.result[1] == "warn" ||
+          data.result[1] == "success"
+        ) {
+          Swal.fire({
+            icon: "success",
+            title: "Email enviado com sucesso!",
+            confirmButtonText: "Enviar outro e-mail",
+            confirmButtonColor: "#151546",
+            cancelButtonText: "Voltar",
+            cancelButtonColor: "#0070b5",
+            showCancelButton: true,
+            footer:
+              '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              resetar();
+            }
+          });
         } else {
           deleteFiles(files)
           files = []
           Swal.fire({
             icon: "error",
-            title: data[0],
-            text: data[1],
+            title: data.result[0],
+            text: data.result[1],
           });
         }
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        Swal.close();
-        console.error("Requisição para a API falhou");
-        console.log("textStatus", textStatus);
+      } else {
         deleteFiles(files)
         files = []
-        // Exibir mensagem de erro para o usuário ou realizar outra ação
         Swal.fire({
           icon: "error",
-          title: "Erro ao enviar o email!",
-          text: "Não foi possível enviar o e-mail. Tente novamente mais tarde!",
+          title: data[0],
+          text: data[1],
         });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      Swal.close();
+      console.error("Requisição para a API falhou");
+      console.log("textStatus", textStatus);
+      deleteFiles(files)
+      files = []
+      // Exibir mensagem de erro para o usuário ou realizar outra ação
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao enviar o email!",
+        text: "Não foi possível enviar o e-mail. Tente novamente mais tarde!",
+      });
 
-        $("#btnEmail").attr("disabled", false);
-      },
-    });
+      $("#btnEmail").attr("disabled", false);
+    },
   });
+
 }
 
 function sendEmail() {
@@ -356,7 +352,7 @@ function attTemplate(data) {
   }
   template1 = fornecedores[0].tipos.find((tipo) => tipo.id == 0);
   attAssunto(tipo.assunto);
-  montarTemplate(template1.template, template2);
+  montarTemplate(userDados, template1.template, template2);
   $("#cpTxt").show();
   $("#cpBtn").show();
 
@@ -449,19 +445,19 @@ function montarCampos(campos) {
   campos.forEach((cam) => {
     $("#campoOp").append(
       '<option value="' +
-        cam.idElemento +
-        '">' +
-        cam.nome.toUpperCase() +
-        "</option>"
+      cam.idElemento +
+      '">' +
+      cam.nome.toUpperCase() +
+      "</option>"
     );
   });
 }
 
-function definirCampos(data) {
+function definirCampos(userDados, data) {
   solicitantes = data.solicitantes;
   fornecedores = data.fornecedores;
   emailUser = localStorage.getItem("emailUser");
-  if (emailUser == "meliza@easyjur.com") {
+  if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
     //definindo os valores
     $("#solOp").attr("multiple", "multiple");
   }
@@ -509,7 +505,7 @@ function definirCampos(data) {
     },
   });
   emailUser = localStorage.getItem("emailUser");
-  if (emailUser == "meliza@easyjur.com") {
+  if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
     //definindo os valores
 
     solicitantes.forEach((sol) => {
@@ -520,26 +516,26 @@ function definirCampos(data) {
   } else {
     $("#solOp").append(
       '<option value="' +
-        solicitantes[0].email +
-        '">' +
-        solicitantes[0].nome +
-        "</option>"
+      solicitantes[0].email +
+      '">' +
+      solicitantes[0].nome +
+      "</option>"
     );
     $("#solOp").append(
       '<option value="' +
-        solicitantes[1].email +
-        '">' +
-        solicitantes[1].nome +
-        "</option>"
+      solicitantes[1].email +
+      '">' +
+      solicitantes[1].nome +
+      "</option>"
     );
   }
-  
+
   fornecedores.forEach((forn) => {
     $("#forOp").append(
       '<option value="' + forn.id + '">' + forn.nome + "</option>"
     );
   });
-  montarTemplate(fornecedores[0].tipos[0].template, []);
+  montarTemplate(userDados, fornecedores[0].tipos[0].template, []);
 }
 
 function habilita() {
@@ -577,7 +573,7 @@ function atualizarProgresso(progressoTotal, idBarra) {
       "background-color",
       cor + " !important"
     );
-    
+
   }
 }
 async function addAnexo(newfiles) {
@@ -595,10 +591,10 @@ function upFile(file) {
     var nome = file.name;
     var storageRef = firebase
       .storage()
-      .ref("anexos/" + localStorage.getItem("idUser") + "/" +new Date().getTime() +"-"+ nome);
+      .ref("anexos/" + localStorage.getItem("idUser") + "/" + new Date().getTime() + "-" + nome);
 
     var uploadTask = storageRef.put(file);
-   
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -617,11 +613,11 @@ function upFile(file) {
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          miniArquivo = "<label class='labAnex' id="+downloadURL+">" + nome;
+          miniArquivo = "<label class='labAnex' id=" + downloadURL + ">" + nome;
           btnExcluir = "<button class='delAnex'></button></label>";
           lbl = miniArquivo + btnExcluir;
           $(".prevAnex").append(lbl);
-          
+
           resolve(downloadURL);
         });
       }
@@ -664,7 +660,7 @@ function attId(idEmail) {
   var idEmail = "";
   if (tipAssunto == "cliente") {
     idEmail = " [id_ti: " + idEmail + "]";
-  } else if (localStorage.getItem("emailUser") == "meliza@easyjur.com") {
+  } else if (localStorage.getItem("emailUser") == "meliza@easyjur.com" || localStorage.getItem("emailUser") == "maraelizateste@gmail.com") {
     idEmail = " [id_ag: " + idEmail + "]";
   }
   $("#assunto").append(idEmail);
@@ -694,13 +690,19 @@ function entrou(e) {
     $(".dragover-area").show();
   }
 }
+var emailUser;
+var idUser;
+var userDados;
+
 $(document).ready(() => {
 
-  var emailUser = localStorage.getItem("emailUser");
-  var idUser = localStorage.getItem("idUser");
-  if(!emailUser || !idUser){
+  emailUser = localStorage.getItem("emailUser");
+  idUser = localStorage.getItem("idUser");
+
+  if (!emailUser || !idUser) {
     window.location = '/'
   }
+
   $("#cpTxt").hide();
   $("#cpBtn").hide();
   $("#desBox").hide();
@@ -792,11 +794,11 @@ $(document).ready(() => {
     addAnexo(newfiles);
   });
   $(document).on("click", ".delAnex", function () {
-      
+
     deleteFileFromURL($(this).parent().attr('id'))
     files = files.filter(item => item !== $(this).parent().attr('id'));
     console.log(files)
-    
+
     $(this).parent().remove();
   });
   $iframe.contents().on("dragenter dragover", function (e) {
@@ -818,96 +820,98 @@ $(document).ready(() => {
 
   // Função para carregar o arquivo JSON
   $.getJSON("../static/dados.json", (data) => {
-    campos = data.campos;
-    definirCamposPersonalizados(campos);
-    esconderFilhos("camposPersonalizadosBox");
-    definirCampos(data);
+    db.ref("/users/" + id).on("value", (dataBD) => {
+      userDados = dataBD.val();
+      campos = data.campos;
+      definirCamposPersonalizados(campos);
+      esconderFilhos("camposPersonalizadosBox");
+      definirCampos(userDados, data);
 
-    $("#toggle1").click(function () {
-      $(this).find("img").toggleClass("up down");
+      $("#toggle1").click(function () {
+        $(this).find("img").toggleClass("up down");
 
-      $("#toggleBox1").slideToggle(400, "swing");
-    });
-    $("#toggle2").hide();
-    $("#toggle2").click(function () {
-      $(this).find("img").toggleClass("up down");
-      $("#toggleBox2").slideToggle(400, "swing");
-    });
-    $("#toggle3").click(function () {
-      $(this).find("img").toggleClass("up down");
-      $("#toggleBox3").slideToggle(400, "swing");
-    });
+        $("#toggleBox1").slideToggle(400, "swing");
+      });
+      $("#toggle2").hide();
+      $("#toggle2").click(function () {
+        $(this).find("img").toggleClass("up down");
+        $("#toggleBox2").slideToggle(400, "swing");
+      });
+      $("#toggle3").click(function () {
+        $(this).find("img").toggleClass("up down");
+        $("#toggleBox3").slideToggle(400, "swing");
+      });
 
-    $("#solOp").change(() => {
-      if ($("#solOp").val() && $("#solOp").val() != 0) {
-        var solEmail = $("#solOp").val();
-        if (solEmail == "") {
-          $("#labelId").hide();
-          $("#idEmBox").hide();
-          $("#idEmCaixa").hide();
-        } else {
-          $("#labelId").show();
-          $("#idEmBox").show();
-          $("#idEmCaixa").show();
-        }
-        if (solEmail == "cliente") {
-          $("#idEmBox").show();
-          $("#idEmCaixa").show();
-          $("#labelId").show();
-          $("#idEmCaixa").attr("placeholder", "Digite o id do ticket");
-          $("#labelId").text("ID DO TICKET: ");
-        } else {
-          emailUser = localStorage.getItem("emailUser");
-          if (emailUser == "meliza@easyjur.com") {
-            $("#idEmCaixa").attr("placeholder", "Digite o id da agenda");
-            $("#labelId").text("ID DA AGENDA: ");
-            $("#labelId").show();
-          } else {
+      $("#solOp").change(() => {
+        if ($("#solOp").val() && $("#solOp").val() != 0) {
+          var solEmail = $("#solOp").val();
+          if (solEmail == "") {
+            $("#labelId").hide();
             $("#idEmBox").hide();
             $("#idEmCaixa").hide();
-            $("#labelId").hide();
+          } else {
+            $("#labelId").show();
+            $("#idEmBox").show();
+            $("#idEmCaixa").show();
           }
-        }
+          if (solEmail == "cliente") {
+            $("#idEmBox").show();
+            $("#idEmCaixa").show();
+            $("#labelId").show();
+            $("#idEmCaixa").attr("placeholder", "Digite o id do ticket");
+            $("#labelId").text("ID DO TICKET: ");
+          } else {
+            emailUser = localStorage.getItem("emailUser");
+            if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
+              $("#idEmCaixa").attr("placeholder", "Digite o id da agenda");
+              $("#labelId").text("ID DA AGENDA: ");
+              $("#labelId").show();
+            } else {
+              $("#idEmBox").hide();
+              $("#idEmCaixa").hide();
+              $("#labelId").hide();
+            }
+          }
 
-        $("#cc").val(solEmail).trigger("change");
-      }
-    });
-    $("#cc").change(() => {
-      var txt = $("#cc").val();
-      txt = txt.replace("cliente,", "");
-      txt = txt.replace("ej,", "");
-      txt = txt.replace("cliente", "");
-      txt = txt.replace("ej", "");
-      $("#cc").val(txt);
-    });
-    $("#idEmCaixa").change(() => {
-      var idEmail = $("#idEmCaixa").val();
-      if (idEmail) {
-        $("#forBox").show();
-        var assunto = $("#assunto").val();
-        if (assunto.length > 2) {
-          var idOp = $("#tipOp").val();
-          idFor = $("#forOp").val();
-          var forn = fornecedores.find((forn) => forn.id == idFor);
-          var tipos = forn.tipos;
-          var tipo = tipos.find((tip) => tip.id == idOp);
-          if (idOp != 0) {
-            attAssunto(tipo.assunto);
+          $("#cc").val(solEmail).trigger("change");
+        }
+      });
+      $("#cc").change(() => {
+        var txt = $("#cc").val();
+        txt = txt.replace("cliente,", "");
+        txt = txt.replace("ej,", "");
+        txt = txt.replace("cliente", "");
+        txt = txt.replace("ej", "");
+        $("#cc").val(txt);
+      });
+      $("#idEmCaixa").change(() => {
+        var idEmail = $("#idEmCaixa").val();
+        if (idEmail) {
+          $("#forBox").show();
+          var assunto = $("#assunto").val();
+          if (assunto.length > 2) {
+            var idOp = $("#tipOp").val();
+            idFor = $("#forOp").val();
+            var forn = fornecedores.find((forn) => forn.id == idFor);
+            var tipos = forn.tipos;
+            var tipo = tipos.find((tip) => tip.id == idOp);
+            if (idOp != 0) {
+              attAssunto(tipo.assunto);
+            }
           }
         }
-      }
-    });
-    $("#forOp").change(() => {
-      if ($("#forOp").val() && $("#forOp").val() != 0) {
-        idFor = $("#forOp").val();
-        if (idFor != 0) {
-          var forn = fornecedores.find((forn) => forn.id == idFor);
-          if (forn.emails) {
-            $("#desOp").empty()
-          
-            forn.emails.forEach((email) => {
-              $("#desOp").append(
-                '<option value="' +
+      });
+      $("#forOp").change(() => {
+        if ($("#forOp").val() && $("#forOp").val() != 0) {
+          idFor = $("#forOp").val();
+          if (idFor != 0) {
+            var forn = fornecedores.find((forn) => forn.id == idFor);
+            if (forn.emails) {
+              $("#desOp").empty()
+
+              forn.emails.forEach((email) => {
+                $("#desOp").append(
+                  '<option value="' +
                   email.email +
                   '">' +
                   email.nome +
@@ -915,138 +919,148 @@ $(document).ready(() => {
                   email.tipo +
                   "]" +
                   "</option>"
-              );
-            });
-            $("#desOp").val(forn.emails[0].email);
-            if ($("#forOp").val() == 3) {
-              $("#desOp").attr("multiple", "multiple");
-            } else {
-              $("#desOp").removeAttr("multiple");
-            }
-            $("#desOp").select2({
-              placeholder: "Selecione o destinatário",
-              theme: "classic",
-              width: "100%",
-              language: {
-                noResults: function () {
-                  return "Nenhum resultado encontrado";
+                );
+              });
+              $("#desOp").val(forn.emails[0].email);
+              if ($("#forOp").val() == 3) {
+                $("#desOp").attr("multiple", "multiple");
+              } else {
+                $("#desOp").removeAttr("multiple");
+              }
+              $("#desOp").select2({
+                placeholder: "Selecione o destinatário",
+                theme: "classic",
+                width: "100%",
+                language: {
+                  noResults: function () {
+                    return "Nenhum resultado encontrado";
+                  },
                 },
-              },
-            });
-            $("#desBox").show();
-            definirTipo();
+              });
+              $("#desBox").show();
+              definirTipo();
+            }
+          } else {
+            $("#tipBox").hide();
+            $("#desBox").hide();
+            esconderFilhos("camposPersonalizadosBox");
           }
-        } else {
-          $("#tipBox").hide();
-          $("#desBox").hide();
-          esconderFilhos("camposPersonalizadosBox");
         }
-      }
-    });
-    $("#desOp").change(() => {
-      if ($("#desOp").val() && $("#desOp").val() != 0) {
-        var emailDes = $("#desOp").val();
-        if (
-          emailDes == "leticia.rocha@asaas.com.br" ||
-          emailDes == "integracoes@asaas.com.br"
-        ) {
+      });
+      $("#desOp").change(() => {
+        if ($("#desOp").val() && $("#desOp").val() != 0) {
+          var emailDes = $("#desOp").val();
           var cc = $("#cc").val();
-          if (cc != "") {
-            cc += ",ecardoso@easyjur.com";
-          } else {
-            cc = "ecardoso@easyjur.com,";
-          }
-          $("#cc").val(cc);
-        }
-        definirTipo();
-      }
-    });
-    $("#tipOp").change(() => {
-      if ($("#tipOp").val() && $("#tipOp").val() != 0) {
-        var forId = $("#forOp").val();
-        var tipId = $("#tipOp").val();
-        console.log(forId);
-        //se fornecedor for solucionare
-        var txt = "";
-        if (forId == 1) {
-          if (tipId == 4 || tipId == 19 || tipId == 13) {
-            txt =
-              "Antes de abrir o chamado, por favor, verifique as credenciais do cliente diretamente no site do tribunal";
-          } else if (tipId == 20) {
-            txt =
-              "Antes de solicitar o refinamento, peça autorização para o cilente, pois corre-se o risco de perda de publicação.";
-          } else if (tipId == 10 || tipId == 7) {
-            txt =
-              "O prazo de coleta de andamentos é de 48 horas úteis, por favor, verifique se está realmente fora do prazo";
-          } else if (tipId == 11 || tipId == 8) {
-            txt =
-              "O prazo de coleta de publicações é de 12 horas úteis, por favor, verifique se está realmente fora do prazo";
-          } else if (tipId == 12 || tipId == 9) {
-            txt =
-              "O prazo de coleta de intimações é de 24 horas úteis, por favor, verifique se está realmente fora do prazo";
-          } else {
-            tipId = 0;
-          }
-        } else if (forId == 2) {
-          //se for a Kurier
-          if (tipId == 3) {
-            txt =
-              "O monitoramento de processos distribuídos é feito pela razão social. Para monitorar pelo CNPJ, cadastre-o como variação de um termo monitorado (razão social).";
-          } else {
-            tipId = 0;
-          }
-        } else if (forId == 3) {
-          //se for o Asaas
-          if (tipId == 3) {
-            txt =
-              "Adicione as respostas do cliente do formulário de solicitação de aumento de limite diretamente na caixa de e-mail!";
-          } else {
-            tipId = 0;
-          }
-        }
-        if (tipId != 0 && tipId != "") {
-          $("#alertMsg").text(txt);
-          Swal.fire({
-            icon: "info",
-            title: "Atenção!",
-            text: txt,
-          });
-        } else {
-          $("#alertMsg").text("");
-        }
-        attTemplate(data);
-      }
-    });
+          if (
+            emailDes.includes("leticia.rocha@asaas.com.br") ||
+            emailDes.includes("integracoes@asaas.com.br")
+          ) {
+            
+            if (!cc.includes("ecardoso@easyjur.com")) {
+              if (cc != "") {
+                cc += ",ecardoso@easyjur.com";
+              } else {
+                cc = "ecardoso@easyjur.com,";
+              }
+              $("#cc").val(cc);
+            }
 
-    $("#destinatario").on("input", () => {
-      habilita();
-    });
-    $("#assunto").on("input", () => {
-      habilita();
-    });
-    $("#email").on("input", () => {
-      habilita();
-    });
-    $("#camposPersonalizadosBox").on("input", "input", () => {
-      var preenchido = false;
-      $("#camposPersonalizadosBox input").each(function () {
-        if ($(this).val().trim() !== "") {
-          preenchido = true;
-          return false;
+          }else{
+            cc = cc.replace(",ecardoso@easyjur.com","");
+            cc = cc.replace("ecardoso@easyjur.com,","");
+            $("#cc").val(cc);
+          }
+          definirTipo();
+        }
+      });
+      $("#tipOp").change(() => {
+        if ($("#tipOp").val() && $("#tipOp").val() != 0) {
+          var forId = $("#forOp").val();
+          var tipId = $("#tipOp").val();
+          console.log(forId);
+          //se fornecedor for solucionare
+          var txt = "";
+          if (forId == 1) {
+            if (tipId == 4 || tipId == 19 || tipId == 13) {
+              txt =
+                "Antes de abrir o chamado, por favor, verifique as credenciais do cliente diretamente no site do tribunal";
+            } else if (tipId == 20) {
+              txt =
+                "Antes de solicitar o refinamento, peça autorização para o cilente, pois corre-se o risco de perda de publicação.";
+            } else if (tipId == 10 || tipId == 7) {
+              txt =
+                "O prazo de coleta de andamentos é de 48 horas úteis, por favor, verifique se está realmente fora do prazo";
+            } else if (tipId == 11 || tipId == 8) {
+              txt =
+                "O prazo de coleta de publicações é de 12 horas úteis, por favor, verifique se está realmente fora do prazo";
+            } else if (tipId == 12 || tipId == 9) {
+              txt =
+                "O prazo de coleta de intimações é de 24 horas úteis, por favor, verifique se está realmente fora do prazo";
+            } else {
+              tipId = 0;
+            }
+          } else if (forId == 2) {
+            //se for a Kurier
+            if (tipId == 3) {
+              txt =
+                "O monitoramento de processos distribuídos é feito pela razão social. Para monitorar pelo CNPJ, cadastre-o como variação de um termo monitorado (razão social).";
+            } else {
+              tipId = 0;
+            }
+          } else if (forId == 3) {
+            //se for o Asaas
+            if (tipId == 3) {
+              txt =
+                "Adicione as respostas do cliente do formulário de solicitação de aumento de limite diretamente na caixa de e-mail!";
+            } else {
+              tipId = 0;
+            }
+          }
+          if (tipId != 0 && tipId != "") {
+            $("#alertMsg").text(txt);
+            Swal.fire({
+              icon: "info",
+              title: "Atenção!",
+              text: txt,
+            });
+          } else {
+            $("#alertMsg").text("");
+          }
+          attTemplate(data);
         }
       });
 
-      $("#cpBtn").attr("disabled", !preenchido);
-    });
+      $("#destinatario").on("input", () => {
+        habilita();
+      });
+      $("#assunto").on("input", () => {
+        habilita();
+      });
+      $("#email").on("input", () => {
+        habilita();
+      });
+      $("#camposPersonalizadosBox").on("input", "input", () => {
+        var preenchido = false;
+        $("#camposPersonalizadosBox input").each(function () {
+          if ($(this).val().trim() !== "") {
+            preenchido = true;
+            return false;
+          }
+        });
 
-    $("#cpBtn").click(() => {
-      $("html, body").animate(
-        {
-          scrollTop: $("#toggle3").offset().top,
-        },
-        300
-      );
-      addTemplate(data);
+        $("#cpBtn").attr("disabled", !preenchido);
+      });
+
+      $("#cpBtn").click(() => {
+        $("html, body").animate(
+          {
+            scrollTop: $("#toggle3").offset().top,
+          },
+          300
+        );
+        addTemplate(data);
+      })
+
     });
   }).fail((jqXHR, textStatus, errorThrown) => {
     console.error("Error fetching JSON data:", textStatus, errorThrown);
@@ -1071,7 +1085,7 @@ function uploadImagem(base64Image) {
   var uploadTask = storageRef.put(blob);
   uploadTask.on(
     "state_changed",
-    function () {},
+    function () { },
     function (error) {
       console.error("Erro ao fazer upload", error);
     },

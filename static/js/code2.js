@@ -13,25 +13,25 @@ var db = firebase.database();
 
 $(document).ready(() => {
   var emailUser = localStorage.getItem("emailUser");
-  if(!emailUser){
+  if (!emailUser) {
     window.location = '/'
   }
   var id = localStorage.getItem("idUser");
-  $("#barraAssinatura").css("width", $("#inputAss").outerWidth() )
+  $("#barraAssinatura").css("width", $("#inputAss").outerWidth())
   $("#barraAssinatura").progressbar({ value: 0 });
   $("#barraAssinatura").hide();
-  
-  $("#imgAssinatura").css("width", $("#inputAss").outerWidth() )
-  $("#imgAssinatura").css("height", $("#imgAssinatura").outerWidth()/3 )
+
+  $("#imgAssinatura").css("width", $("#inputAss").outerWidth())
+  $("#imgAssinatura").css("height", $("#imgAssinatura").outerWidth() / 3)
   $("#imgAssinatura").hide()
   $("#delAssinatura").hide()
 
-  $("#barraFundo").css("width", $("#inputAss").outerWidth() )
+  $("#barraFundo").css("width", $("#inputAss").outerWidth())
   $("#barraFundo").progressbar({ value: 0 });
   $("#barraFundo").hide();
-  
+
   $("#delFundo").hide()
-  
+
   var userDados;
   db.ref("/users/" + id).on("value", (data) => {
     userDados = data.val();
@@ -40,15 +40,15 @@ $(document).ready(() => {
     $("#email").val(userDados.email);
     $("#seuNome").text(userDados.nome);
 
-    
+
     if (userDados.fundo) {
       var linkFundo = userDados.fundo.url;
       carregarImagem(linkFundo, "fundo");
       $("#labelFundo").text("");
-      
+
     } else {
       $("#labelFundo").text("Nenhuma imagem de fundo definida");
-      $("#fundo").fadeOut(()=>{
+      $("#fundo").fadeOut(() => {
         $("#fundo").attr("src", "");
         $("#fundo2").attr("src", "");
         $("#delFundo").hide();
@@ -57,23 +57,23 @@ $(document).ready(() => {
     }
     if (userDados.assinatura) {
       var linkAssin = userDados.assinatura.url;
-      
+
       carregarImagem(linkAssin, "imgAssinatura");
-      setTimeout(()=>{
+      setTimeout(() => {
         $("#delAssinatura").fadeIn();
       }, 2000)
-     
-      
+
+
     } else {
-      
-      
-      $("#imgAssinatura").fadeOut(()=>{
+
+
+      $("#imgAssinatura").fadeOut(() => {
 
         $("#delAssinatura").hide();
         $("#imgAssinatura").attr("src", "");
         $("#labelAss").text("Nenhuma assinatura definida");
       });
-      
+
     }
   });
   enviarImagem(
@@ -96,27 +96,27 @@ $(document).ready(() => {
   $("#delFundo").click(() => {
     console.log(userDados)
     var fileRef = storage.refFromURL(userDados.fundo.url)
-    fileRef.delete().then(()=>{
+    fileRef.delete().then(() => {
       db.ref("/users/" + id).update({
         fundo: null,
       });
       mostrarMensagem("Imagem excluída com sucesso", "#00905F");
       $("#delFundo").fadeOut();
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err)
     })
 
-    
-    
+
+
   });
   $("#delAssinatura").click(() => {
     var fileRef = storage.refFromURL(userDados.assinatura.url)
-    fileRef.delete().then(()=>{
+    fileRef.delete().then(() => {
       db.ref("/users/" + id).update({
         assinatura: null,
       });
       mostrarMensagem("Imagem excluída com sucesso", "#00905F");
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err)
     })
   });
@@ -135,12 +135,12 @@ $(document).ready(() => {
         $("#email").val().includes(".com")
       ) {
         if ($("#email").val().includes("easyjur")) {
-          db.ref("/users/").on("value", (data)=>{
+          db.ref("/users/").on("value", (data) => {
             var users = data.val();
             var jaExiste = false
-            for(var i in users){
-              if(users[i].email == $("#email").val()){
-                if(users[i].email != userDados.email){
+            for (var i in users) {
+              if (users[i].email == $("#email").val()) {
+                if (users[i].email != userDados.email) {
                   mostrarMensagem(
                     "Não foi possível alterar o e-mail, pois o e-mail informado está em uso",
                     "orange"
@@ -152,7 +152,7 @@ $(document).ready(() => {
                 }
               }
             }
-            if(!jaExiste){
+            if (!jaExiste) {
               db.ref("/users/" + id).update({
                 email: $("#email").val(),
               });
@@ -160,7 +160,7 @@ $(document).ready(() => {
               erro = false;
             }
           })
-          
+
         } else {
           erro = true;
           mostrarMensagem(
@@ -186,16 +186,16 @@ $(document).ready(() => {
       mostrarMensagem("Senha alterada com sucesso", "#00905F");
       erro = false;
     }
-    setTimeout(()=>{
-      if(!erro){
+    setTimeout(() => {
+      if (!erro) {
         swal({
-          title:"Alterações feitas com sucesso!"
+          title: "Alterações feitas com sucesso!"
         })
       }
     }, 1000)
 
   });
-  
+
 });
 function atualizarProgresso(progressoTotal, idBarra) {
   if (progressoTotal >= 0 || progressoTotal <= 100) {
@@ -220,18 +220,18 @@ function definirImagem(url, idImg, idLabel) {
   checarImagem(idImg, url, function (valida) {
     if (valida) {
       if (idImg == "fundo") {
-        $("#" + idImg).fadeIn(400,()=>{
+        $("#" + idImg).fadeIn(400, () => {
           $("#fundo").css("opacity", 1);
           $("#fundo2").css("opacity", 1);
           $("#fundo2").attr("src", url);
           $("#delFundo").fadeIn();
         });
-         
 
-        
-       
-      }else{
-        $("#imgAssinatura").fadeIn(400, ()=>{
+
+
+
+      } else {
+        $("#imgAssinatura").fadeIn(400, () => {
           $("#labelAss").text("");
         });
       }
@@ -261,9 +261,9 @@ function enviarImagem(idBtn, idInput, propImg, idPreview, idBarra, idLabel) {
       leitor.onload = (e) => {
         $("#" + idPreview).attr("src", e.target.result);
         $("#" + idPreview).fadeIn(200, () => {
-          
-        $("#" + idBtn).fadeIn();
-        $("#" + idLabel).text("");
+
+          $("#" + idBtn).fadeIn();
+          $("#" + idLabel).text("");
         });
       };
       leitor.readAsDataURL(fileInput);
@@ -279,11 +279,11 @@ function enviarImagem(idBtn, idInput, propImg, idPreview, idBarra, idLabel) {
     if (fileInput) {
       const storageRef = storage.ref(
         "images/" +
-          localStorage.getItem("idUser") +
-          "/" +
-          propImg +
-          "/" +
-          fileInput.name
+        localStorage.getItem("idUser") +
+        "/" +
+        propImg +
+        "/" +
+        fileInput.name
       );
       var uptask = storageRef.put(fileInput);
       $("#" + idBarra).show();

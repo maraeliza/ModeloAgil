@@ -22,30 +22,30 @@ function ajustarContainer(larguraMenu) {
 
 function atualizarProgresso(id) {
   // Calcula o progresso total
-  var progressoTotal = (pN  + pS + pE + pS2) * 100/6;
-  if(progressoTotal > 0){
-      // Garante que o valor não ultrapasse 100
-      if (progressoTotal > 100) {
-          progressoTotal = 100;
-      }
-      $("#"+id).progressbar("value", progressoTotal);
+  var progressoTotal = (pN + pS + pE + pS2) * 100 / 6;
+  if (progressoTotal > 0) {
+    // Garante que o valor não ultrapasse 100
+    if (progressoTotal > 100) {
+      progressoTotal = 100;
+    }
+    $("#" + id).progressbar("value", progressoTotal);
 
-      var cor;
-      if (progressoTotal <= 25) {
-          cor = '#ff0000'; // Vermelho
-      } else if (progressoTotal <= 50) {
-          cor = '#ffa500'; // Laranja
-      } else if (progressoTotal <= 75) {
-          cor = '#90ee90'; // Verde claro
-      } else {
-          cor = '#4caf50'; // Verde escuro para 75-100%
-      }
-      $("#"+id+" .ui-progressbar-value").css('background', cor);
-      $("#"+id).show()
-  }else{
-      $("#"+id).hide()
+    var cor;
+    if (progressoTotal <= 25) {
+      cor = '#ff0000'; // Vermelho
+    } else if (progressoTotal <= 50) {
+      cor = '#ffa500'; // Laranja
+    } else if (progressoTotal <= 75) {
+      cor = '#90ee90'; // Verde claro
+    } else {
+      cor = '#4caf50'; // Verde escuro para 75-100%
+    }
+    $("#" + id + " .ui-progressbar-value").css('background', cor);
+    $("#" + id).show()
+  } else {
+    $("#" + id).hide()
   }
-  
+
 }
 function sair() {
   localStorage.removeItem("idUser");
@@ -58,7 +58,7 @@ function encolher() {
     esconderMenuLateral();
     mostrarFilhos("nao_expandido");
     ajustarContainer("auto");
-  
+
 
     if ($(".emailBox").is(":visible") == false) {
       $(".emailBox").show()
@@ -89,7 +89,7 @@ function expandir() {
       }
       if ($(".emailBox").width() < 500) {
         $(".emailBox").hide()
-      } 
+      }
 
     });
 }
@@ -161,7 +161,7 @@ $(document).ready(() => {
 
       $("#salvar").removeClass("btn-escuro");
       $("#salvar").addClass("btn-claro");
-      
+
       $(".dropdown-menu").removeClass("light");
       $(".dropdown-menu").addClass("dark");
       $(".pdiv").css("color", "#FFF");
@@ -174,7 +174,7 @@ $(document).ready(() => {
       $(".labAnex").css("color", "#151546");
     } else {
       $(".labAnex").css("color", "#FFF");
-      
+
       $("#cpBtn").css("background-color", "#151546");
       $("#btnEmail").css("background-color", "#151546");
 
@@ -189,10 +189,10 @@ $(document).ready(() => {
 
       $(".dropdown-menu").removeClass("dark");
       $(".dropdown-menu").addClass("light");
-    
+
       $("#salvar").removeClass("btn-claro");
       $("#salvar").addClass("btn-escuro");
-      
+
       $("#expandido").removeClass("escuro");
       $("#expandido").addClass("claro");
 
