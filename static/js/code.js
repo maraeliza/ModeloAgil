@@ -309,6 +309,7 @@ function escapeHtml(unsafe) {
       .replace(/'/g, "&#039;");
 }
 function addTemplate(data) {
+  
   var editor = $("#email").cleditor();
   ed = editor[0];
   var email = ed.$area.val();
@@ -319,24 +320,28 @@ function addTemplate(data) {
   var texto = "";
   campos.forEach((cam) => {
     var campoInput = $("#" + cam.idElemento);
-    if (campoInput.val() !== "" && campoInput.val() !== undefined && cam.idElemento != "nfCaixa") {
-      texto = "<br><b>" + cam.nome.toUpperCase() + ":</b> ";
-      texto += $("#" + cam.idElemento).val();
-      template.push(texto);
-    } else if (cam.idElemento === "nfCaixa") {
-      console.log("Lendo os dados da nota fiscal");
-      try {
-          var nf = $("#nfCaixa").val();
-          console.log(nf);
-          var parsed = JSON.parse(nf);
-          var formatado = JSON.stringify(parsed, null, 2);
-          console.log(parsed);
-          // Adiciona o JSON formatado ao template
-          template.push('<pre>' + escapeHtml(formatado) + '</pre>');
-      } catch (error) {
-          console.log("Dados da nota fiscal inválidos!");
-          alert('Dados da nota fiscal inválidos!');
-      }
+    if (campoInput.val() !== "" && campoInput.val() !== undefined){
+      
+      if(cam.idElemento != "nfCaixa") {
+        texto = "<br><b>" + cam.nome.toUpperCase() + ":</b> ";
+        texto += $("#" + cam.idElemento).val();
+        template.push(texto);
+      }else {
+        console.log("ID DA NOTA: ", cam.idElemento);
+        console.log(campoInput.val())
+        try {
+            var nf = $("#nfCaixa").val();
+            console.log(nf);
+            var parsed = JSON.parse(nf);
+            var formatado = JSON.stringify(parsed, null, 2);
+            console.log(parsed);
+            // Adiciona o JSON formatado ao template
+            template.push('<pre>' + escapeHtml(formatado) + '</pre>');
+        } catch (error) {
+            console.log("Dados da nota fiscal inválidos!");
+            alert('Dados da nota fiscal inválidos!');
+        }
+    } 
   }
 
   });
@@ -349,6 +354,7 @@ function addTemplate(data) {
       listaLinhas[i].includes("span") &&
       listaLinhas[i].includes("#FFFFFF00")
     ) {
+      console.log(listaLinhas[i])
       listaLinhas[i] = template.join("");
     }
   }
