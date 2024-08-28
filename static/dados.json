@@ -417,9 +417,9 @@
                     "assunto": "Template básico",
                     "template": [
                         "Bom dia! Tudo bem?",
-                        "<span style='color:#FFFFFF00'></span>",
                         "", 
-                        "<span style='color:darkblue; font-weight:bold'>OBS: Somos da EasyJur, a EasyJur é conta pai com um modelo whitelabel, onde as contas dos nossos clientes são contas filhas.",
+                        "<span style='color:#FFFFFF00'></span>",
+                        "<span style='color:darkblue; font-weight:bold'>OBS: Somos uma conta pai com um modelo whitelabel, onde as contas dos nossos clientes são contas filhas.",
                         "A integração com o Asaas nos ajuda a gerenciar pagamentos e recebimentos para essas contas filhas.",
                         "</span>",
                         "Desde já, agradeço!",
