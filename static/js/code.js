@@ -243,8 +243,7 @@ function enviarEmail(email) {
             }
           });
         } else {
-          deleteFiles(files)
-          files = []
+
           Swal.fire({
             icon: "error",
             title: data.result[0],
@@ -252,8 +251,7 @@ function enviarEmail(email) {
           });
         }
       } else {
-        deleteFiles(files)
-        files = []
+
         Swal.fire({
           icon: "error",
           title: data[0],
@@ -265,8 +263,7 @@ function enviarEmail(email) {
       Swal.close();
       console.error("Requisição para a API falhou");
       console.log("textStatus", textStatus);
-      deleteFiles(files)
-      files = []
+
       // Exibir mensagem de erro para o usuário ou realizar outra ação
       Swal.fire({
         icon: "error",
@@ -302,14 +299,14 @@ function sendEmail() {
 }
 function escapeHtml(unsafe) {
   return unsafe
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 function addTemplate(data) {
-  
+
   var editor = $("#email").cleditor();
   ed = editor[0];
   var email = ed.$area.val();
@@ -320,29 +317,28 @@ function addTemplate(data) {
   var texto = "";
   campos.forEach((cam) => {
     var campoInput = $("#" + cam.idElemento);
-    if (campoInput.val() !== "" && campoInput.val() !== undefined){
-      
-      if(cam.idElemento != "nfCaixa") {
+    if (campoInput.val() !== "" && campoInput.val() !== undefined) {
+
+      if (cam.idElemento != "nfCaixa") {
         texto = "<br><b>" + cam.nome.toUpperCase() + ":</b> ";
         texto += $("#" + cam.idElemento).val();
         template.push(texto);
-      }else {
-        console.log("ID DA NOTA: ", cam.idElemento);
-        console.log(campoInput.val())
+      } else {
+
         try {
-            var nf = $("#nfCaixa").val();
-            console.log(nf);
-            var parsed = JSON.parse(nf);
-            var formatado = JSON.stringify(parsed, null, 2);
-            console.log(parsed);
-            // Adiciona o JSON formatado ao template
-            template.push('<pre>' + escapeHtml(formatado) + '</pre>');
+          var nf = $("#nfCaixa").val();
+
+          var parsed = JSON.parse(nf);
+          var formatado = JSON.stringify(parsed, null, 2);
+
+          // Adiciona o JSON formatado ao template
+          template.push('<pre>' + escapeHtml(formatado) + '</pre>');
         } catch (error) {
-            console.log("Dados da nota fiscal inválidos!");
-            alert('Dados da nota fiscal inválidos!');
+          console.log("Dados da nota fiscal inválidos!");
+          alert('Dados da nota fiscal inválidos!');
         }
-    } 
-  }
+      }
+    }
 
   });
 
@@ -354,7 +350,7 @@ function addTemplate(data) {
       listaLinhas[i].includes("span") &&
       listaLinhas[i].includes("#FFFFFF00")
     ) {
-      console.log(listaLinhas[i])
+      
       listaLinhas[i] = template.join("");
     }
   }
@@ -932,7 +928,7 @@ $(document).ready(() => {
           idFor = $("#forOp").val();
           if (idFor != 0) {
             var forn = fornecedores.find((forn) => forn.id == idFor);
-            
+
             if (forn.emails) {
               $("#desOp").empty()
 
@@ -966,7 +962,7 @@ $(document).ready(() => {
               });
               $("#desBox").show();
               definirTipo();
-              attTemplate(data) 
+              attTemplate(data)
             }
           } else {
             $("#tipBox").hide();
@@ -983,7 +979,7 @@ $(document).ready(() => {
             emailDes.includes("leticia.rocha@asaas.com.br") ||
             emailDes.includes("integracoes@asaas.com.br")
           ) {
-            
+
             if (!cc.includes("ecardoso@easyjur.com")) {
               if (cc != "") {
                 cc += ",ecardoso@easyjur.com";
@@ -993,9 +989,9 @@ $(document).ready(() => {
               $("#cc").val(cc);
             }
 
-          }else{
-            cc = cc.replace(",ecardoso@easyjur.com","");
-            cc = cc.replace("ecardoso@easyjur.com,","");
+          } else {
+            cc = cc.replace(",ecardoso@easyjur.com", "");
+            cc = cc.replace("ecardoso@easyjur.com,", "");
             $("#cc").val(cc);
           }
           definirTipo();
@@ -1005,7 +1001,7 @@ $(document).ready(() => {
         if ($("#tipOp").val() && $("#tipOp").val() != 0) {
           var forId = $("#forOp").val();
           var tipId = $("#tipOp").val();
-          console.log(forId);
+         
           //se fornecedor for solucionare
           var txt = "";
           if (forId == 1) {
