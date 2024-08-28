@@ -418,6 +418,10 @@
                     "template": [
                         "Bom dia! Tudo bem?",
                         "<span style='color:#FFFFFF00'></span>",
+                        "", 
+                        "<span style='color:darkblue; font-weight:bold'>OBS: Somos uma conta pai com um modelo whitelabel, onde as contas dos nossos clientes são contas filhas.",
+                        "A integração com o Asaas nos ajuda a gerenciar pagamentos e recebimentos para essas contas filhas.",
+                        "</span>",
                         "Desde já, agradeço!",
                         "Qualquer dúvida, estou à disposição.",
                         "Atenciosamente,",
@@ -426,7 +430,8 @@
                         "[sua_assinatura]"
                     ],
                     "campos": [
-                        15
+                        15,
+                        28
                     ]
                 },
                 {
@@ -436,21 +441,25 @@
                         "Gostaria de solicitar, por gentileza, a verificação e correção de um erro na emissão de uma nota fiscal.",
                         "Verificamos que a emissão retornou com erro pela API de vocês.",
                         "Por favor, a equipe poderia revisar e nos informar o que precisamos fazer para proceder com a correção necessária?"
+                       
                     ],
                     "campos": [
                         15,
                         26,
                         16,
                         17,
-                        27
+                        27,
+                        28
                     ]
                 },
                 {
                     "id": 2,
                     "assunto": "Emissão de boleto",
-                    "template": [],
+                    "template": [
+                    ],
                     "campos": [
-                        15
+                        15,
+                        28
                     ]
                 },
                 {
@@ -458,18 +467,23 @@
                     "assunto": "Solicitação de aumento de limite",
                     "template": [
                         "Gostaria de solicitar aumento de limite para a conta do nosso cliente."
+                        
                     ],
                     "campos": [
                         14,
-                        15
+                        15,
+                        28
                     ]
                 },
                 {
                     "id": 4,
                     "assunto": "Outros",
-                    "template": [],
+                    "template": [
+                       
+                    ],
                     "campos": [
-                        15
+                        15,
+                        28
                     ]
                 },
                 {
@@ -477,9 +491,23 @@
                     "assunto": "Alteração de dados cadastrados ",
                     "template": [
                         "Gostaríamos de solicitar a alteração dos dados do nosso cliente"
+                     
                     ],
                     "campos": [
-                        15
+                        15,
+                        28
+                    ]
+                },
+                {
+                    "id": 6,
+                    "assunto": "Cadastro de conta",
+                    "template": [
+                        "Gostaríamos de solicitar a alteração dos dados do nosso cliente"
+                    ],
+                    "campos": [
+                        15,
+                        27,
+                        28
                     ]
                 }
             ]
@@ -697,6 +725,11 @@
             "id": 27,
             "nome": "Mensagem de erro",
             "idElemento": "meCaixa"
+        },
+        {
+            "id": 28,
+            "nome": "Cliente",
+            "idElemento": "clienteCaixa"
         }
     ]
 }

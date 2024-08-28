@@ -300,6 +300,14 @@ function sendEmail() {
     enviarEmail(email);
   }
 }
+function escapeHtml(unsafe) {
+  return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
 function addTemplate(data) {
   var editor = $("#email").cleditor();
   ed = editor[0];
@@ -311,11 +319,26 @@ function addTemplate(data) {
   var texto = "";
   campos.forEach((cam) => {
     var campoInput = $("#" + cam.idElemento);
-    if (campoInput.val() !== "" && campoInput.val() !== undefined) {
+    if (campoInput.val() !== "" && campoInput.val() !== undefined && cam.idElemento != "nfCaixa") {
       texto = "<br><b>" + cam.nome.toUpperCase() + ":</b> ";
       texto += $("#" + cam.idElemento).val();
       template.push(texto);
-    }
+    } else if (cam.idElemento === "nfCaixa") {
+      console.log("Lendo os dados da nota fiscal");
+      try {
+          var nf = $("#nfCaixa").val();
+          console.log(nf);
+          var parsed = JSON.parse(nf);
+          var formatado = JSON.stringify(parsed, null, 2);
+          console.log(parsed);
+          // Adiciona o JSON formatado ao template
+          template.push('<pre>' + escapeHtml(formatado) + '</pre>');
+      } catch (error) {
+          console.log("Dados da nota fiscal inválidos!");
+          alert('Dados da nota fiscal inválidos!');
+      }
+  }
+
   });
 
   template.push("</span><br>");
@@ -330,11 +353,8 @@ function addTemplate(data) {
     }
   }
   email = listaLinhas.join("<br>");
-
   ed.$area.val(email);
-  //mudarCor("valores", "#FFFFFF00");
   ed.updateFrame();
-
   $("#camposPersonalizadosBox input").val("");
 }
 function attTemplate(data) {
@@ -350,7 +370,7 @@ function attTemplate(data) {
   } else {
     template2 = [];
   }
-  template1 = fornecedores[0].tipos.find((tipo) => tipo.id == 0);
+  template1 = tipos.find((tip) => tip.id == 0);
   attAssunto(tipo.assunto);
   montarTemplate(userDados, template1.template, template2);
   $("#cpTxt").show();
@@ -906,6 +926,7 @@ $(document).ready(() => {
           idFor = $("#forOp").val();
           if (idFor != 0) {
             var forn = fornecedores.find((forn) => forn.id == idFor);
+            
             if (forn.emails) {
               $("#desOp").empty()
 
@@ -939,6 +960,7 @@ $(document).ready(() => {
               });
               $("#desBox").show();
               definirTipo();
+              attTemplate(data) 
             }
           } else {
             $("#tipBox").hide();
