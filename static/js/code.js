@@ -58,8 +58,9 @@ function resetar() {
 
   esconderFilhos("camposPersonalizadosBox");
   $("#alertMsg").text("");
-  $("#solOp").val(0).trigger("change");
-  $("#desOp").val(0).trigger("change");
+  $("#campoOp").val('').trigger("change");
+  $("#solOp").val('').trigger("change");
+  $("#desOp").val('').trigger("change");
   $("#forOp").val(0).trigger("change");
   $("#tipOp").val(0).trigger("change");
 
