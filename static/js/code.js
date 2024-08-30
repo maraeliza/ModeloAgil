@@ -42,6 +42,7 @@ function attAssunto(assunto) {
     if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
       texto += "id_ag: " + idEmail + "]";
     } else {
+      $("#assunto").val("");
       texto = "";
     }
   }
@@ -194,9 +195,6 @@ function enviarEmail(email) {
 
   var cc = $("#cc").val().replace(/\s+/g, "").split(",");
   var destinatario = $("#destinatario").val().replace(/\s+/g, "").split(",");
-
-  var id = localStorage.getItem("idUser");
-
 
   var userEmail = userDados.email;
   var userSenha = userDados.senha;
@@ -866,6 +864,8 @@ $(document).ready(() => {
       });
 
       $("#solOp").change(() => {
+        
+        $("#cc").trigger("change");
         if ($("#solOp").val() && $("#solOp").val() != 0) {
           var solEmail = $("#solOp").val();
           if (solEmail == "") {
@@ -897,9 +897,51 @@ $(document).ready(() => {
           }
 
           $("#cc").val(solEmail).trigger("change");
+        }else{
+          $("#cc").val("").trigger("change");
         }
       });
       $("#cc").change(() => {
+        var emailDes = $("#desOp").val();
+        var cc = $("#cc").val();
+        if (
+          emailDes.includes("leticia.rocha@asaas.com.br") ||
+          emailDes.includes("integracoes@asaas.com.br")
+        ) {
+
+          if (!cc.includes("ecardoso@easyjur.com")) {
+            if (cc != "") {
+              cc += ",ecardoso@easyjur.com";
+            } else {
+              cc = "ecardoso@easyjur.com,";
+            }
+            $("#cc").val(cc);
+          }
+
+        } else {
+          cc = cc.replace(",ecardoso@easyjur.com", "");
+          cc = cc.replace("ecardoso@easyjur.com,", "");
+          $("#cc").val(cc);
+        }
+
+        if (
+          emailDes.includes("atendimento@kurier.com.br")
+        ) {
+          if (!cc.includes("alex.andrade@kurier.com.br")) {
+            if (cc != "") {
+              cc += ",alex.andrade@kurier.com.br";
+            } else {
+              cc = "alex.andrade@kurier.com.br,";
+            }
+            $("#cc").val(cc);
+          }
+
+        } else {
+          cc = cc.replace(",alex.andrade@kurier.com.br", "");
+          cc = cc.replace("alex.andrade@kurier.com.br,", "");
+          $("#cc").val(cc);
+        }
+
         var txt = $("#cc").val();
         txt = txt.replace("cliente,", "");
         txt = txt.replace("ej,", "");
@@ -918,9 +960,8 @@ $(document).ready(() => {
             var forn = fornecedores.find((forn) => forn.id == idFor);
             var tipos = forn.tipos;
             var tipo = tipos.find((tip) => tip.id == idOp);
-            if (idOp != 0) {
-              attAssunto(tipo.assunto);
-            }
+            attAssunto(tipo.assunto);
+           
           }
         }
       });
@@ -946,6 +987,7 @@ $(document).ready(() => {
                 );
               });
               $("#desOp").val(forn.emails[0].email);
+              
               if ($("#forOp").val() == 3) {
                 $("#desOp").attr("multiple", "multiple");
               } else {
@@ -962,6 +1004,8 @@ $(document).ready(() => {
                 },
               });
               $("#desBox").show();
+
+              $("#cc").trigger("change");
               definirTipo();
               attTemplate(data)
             }
@@ -973,28 +1017,8 @@ $(document).ready(() => {
         }
       });
       $("#desOp").change(() => {
+        $("#cc").trigger("change");
         if ($("#desOp").val() && $("#desOp").val() != 0) {
-          var emailDes = $("#desOp").val();
-          var cc = $("#cc").val();
-          if (
-            emailDes.includes("leticia.rocha@asaas.com.br") ||
-            emailDes.includes("integracoes@asaas.com.br")
-          ) {
-
-            if (!cc.includes("ecardoso@easyjur.com")) {
-              if (cc != "") {
-                cc += ",ecardoso@easyjur.com";
-              } else {
-                cc = "ecardoso@easyjur.com,";
-              }
-              $("#cc").val(cc);
-            }
-
-          } else {
-            cc = cc.replace(",ecardoso@easyjur.com", "");
-            cc = cc.replace("ecardoso@easyjur.com,", "");
-            $("#cc").val(cc);
-          }
           definirTipo();
         }
       });

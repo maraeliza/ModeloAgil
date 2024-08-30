@@ -373,6 +373,19 @@
                         15,
                         20
                     ]
+                },
+                {
+                    "id": 5,
+                    "assunto": "Coleta indevida de processos distribuídos",
+                    "template": [
+                        "Gostaríamos de saber o motivo pelo qual o processo a seguir foi coletado.",
+                        "Além disso, poderia nos informar o que fazer para evitar que isso ocorra novamente?"
+                    ],
+                    "campos": [
+                        1,
+                        15,
+                        20
+                    ]
                 }
             ]
         },
