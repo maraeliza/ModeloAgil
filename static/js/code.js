@@ -904,6 +904,7 @@ $(document).ready(() => {
       $("#cc").change(() => {
         var emailDes = $("#desOp").val();
         var cc = $("#cc").val();
+        if(emailDes){
         if (
           emailDes.includes("leticia.rocha@asaas.com.br") ||
           emailDes.includes("integracoes@asaas.com.br")
@@ -940,7 +941,9 @@ $(document).ready(() => {
           cc = cc.replace(",alex.andrade@kurier.com.br", "");
           cc = cc.replace("alex.andrade@kurier.com.br,", "");
           $("#cc").val(cc);
+        } 
         }
+        
 
         var txt = $("#cc").val();
         txt = txt.replace("cliente,", "");
