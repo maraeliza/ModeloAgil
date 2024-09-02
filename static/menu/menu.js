@@ -49,7 +49,7 @@ function atualizarProgresso(id) {
 }
 function sair() {
   localStorage.removeItem("idUser");
-  window.location = "/";
+  window.location = "/index.html";
 }
 
 function encolher() {

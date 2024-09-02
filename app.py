@@ -5,9 +5,7 @@ import requests
 from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+
 
 upload_folder = os.getcwd() + '/uploads'
 app.config['UPLOAD_FOLDER'] = upload_folder
@@ -87,7 +85,13 @@ def send_email():
         
         return jsonify({"error": resposta}), 500
 
-  
+@app.route('/')
+def index():
+    return render_template('index.html')
+@app.route('/index.html')
+def index2():
+    return render_template('index.html')
+
 @app.route('/email.html')
 def email():
     return render_template('email.html')
