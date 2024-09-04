@@ -33,6 +33,7 @@ $(document).ready(() => {
   $("#delFundo").hide()
 
   var userDados;
+  var ativou = false;
   db.ref("/users/" + id).on("value", (data) => {
     userDados = data.val();
 
@@ -40,6 +41,27 @@ $(document).ready(() => {
     $("#email").val(userDados.email);
     $("#seuNome").text(userDados.nome);
 
+    ativou = userDados.ativou || false;
+    if(ativou==false){
+      Swal.fire({
+        icon: 'warning',
+        title: "Ativação de conta pendente no Google",
+        text:"Por favor, autorize o envio de e-mails da sua conta no Google",
+        confirmButtonText: "Ativar",
+        confirmButtonColor: "#151546",
+        showCancelButton: false, 
+        showConfirmButton: true, 
+        allowOutsideClick: false, 
+        allowEscapeKey: false, 
+        allowEnterKey: false, 
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+          db.ref("/users/" + id + "/ativou").set(true);
+          window.open('https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MkZh54OxDrLe-77Btt-fuJtqWVFI79TW4cDnxNCPPR-cT4KKZ9f5bet3C_EV7ehIr57YXcZn_inuLZm382nACIKgYLYUD3nM1eMAPgBXZQAVhV6SI', "_blank");
+        }
+      });
+    }
 
     if (userDados.fundo) {
       var linkFundo = userDados.fundo.url;

@@ -234,6 +234,7 @@ function enviarEmail(email) {
             cancelButtonText: "Voltar",
             cancelButtonColor: "#0070b5",
             showCancelButton: true,
+         
             footer:
               '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
           }).then((result) => {

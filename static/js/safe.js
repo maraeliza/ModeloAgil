@@ -35,7 +35,7 @@ function login() {
             if (dados[i].email == email && dados[i].senha == password) {
                 localStorage.setItem("idUser", dados[i].id)
                 localStorage.setItem("emailUser", dados[i].email)
-                window.location = "email.html"
+                window.location = "perfil.html"
                 logou = true;
             }
         }
@@ -271,7 +271,8 @@ function criarConta() {
                     email: email.toLowerCase(),
                     senha: password,
                     id: id,
-                    nome: nome
+                    nome: nome,
+                    ativou:false
                 })
                 window.location.reload();
             }
