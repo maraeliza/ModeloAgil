@@ -234,7 +234,7 @@ function enviarEmail(email) {
             cancelButtonText: "Voltar",
             cancelButtonColor: "#0070b5",
             showCancelButton: true,
-         
+
             footer:
               '<a target="_blank" href="https://mail.google.com/mail/u/0/#sent">Checar e-mail enviado</a>',
           }).then((result) => {
@@ -350,7 +350,7 @@ function addTemplate(data) {
       listaLinhas[i].includes("span") &&
       listaLinhas[i].includes("#FFFFFF00")
     ) {
-      
+
       listaLinhas[i] = template.join("");
     }
   }
@@ -865,7 +865,7 @@ $(document).ready(() => {
       });
 
       $("#solOp").change(() => {
-        
+
         $("#cc").trigger("change");
         if ($("#solOp").val() && $("#solOp").val() != 0) {
           var solEmail = $("#solOp").val();
@@ -898,53 +898,61 @@ $(document).ready(() => {
           }
 
           $("#cc").val(solEmail).trigger("change");
-        }else{
+        } else {
           $("#cc").val("").trigger("change");
         }
       });
       $("#cc").change(() => {
         var emailDes = $("#desOp").val();
         var cc = $("#cc").val();
-        if(emailDes){
-        if (
-          emailDes.includes("leticia.rocha@asaas.com.br") ||
-          emailDes.includes("integracoes@asaas.com.br")
-        ) {
-
-          if (!cc.includes("ecardoso@easyjur.com")) {
+        if (emailDes) {
+          if (!cc.includes("meliza@easyjur.com")) {
             if (cc != "") {
-              cc += ",ecardoso@easyjur.com";
+              cc += ",meliza@easyjur.com";
             } else {
-              cc = "ecardoso@easyjur.com,";
+              cc = "meliza@easyjur.com,";
             }
             $("#cc").val(cc);
           }
+          if (
+            emailDes.includes("leticia.rocha@asaas.com.br") ||
+            emailDes.includes("integracoes@asaas.com.br")
+          ) {
 
-        } else {
-          cc = cc.replace(",ecardoso@easyjur.com", "");
-          cc = cc.replace("ecardoso@easyjur.com,", "");
-          $("#cc").val(cc);
-        }
-
-        if (
-          emailDes.includes("atendimento@kurier.com.br")
-        ) {
-          if (!cc.includes("alex.andrade@kurier.com.br")) {
-            if (cc != "") {
-              cc += ",alex.andrade@kurier.com.br";
-            } else {
-              cc = "alex.andrade@kurier.com.br,";
+            if (!cc.includes("ecardoso@easyjur.com")) {
+              if (cc != "") {
+                cc += ",ecardoso@easyjur.com";
+              } else {
+                cc = "ecardoso@easyjur.com,";
+              }
+              $("#cc").val(cc);
             }
+
+          } else {
+            cc = cc.replace(",ecardoso@easyjur.com", "");
+            cc = cc.replace("ecardoso@easyjur.com,", "");
             $("#cc").val(cc);
           }
 
-        } else {
-          cc = cc.replace(",alex.andrade@kurier.com.br", "");
-          cc = cc.replace("alex.andrade@kurier.com.br,", "");
-          $("#cc").val(cc);
-        } 
+          if (
+            emailDes.includes("atendimento@kurier.com.br")
+          ) {
+            if (!cc.includes("alex.andrade@kurier.com.br")) {
+              if (cc != "") {
+                cc += ",alex.andrade@kurier.com.br";
+              } else {
+                cc = "alex.andrade@kurier.com.br,";
+              }
+              $("#cc").val(cc);
+            }
+
+          } else {
+            cc = cc.replace(",alex.andrade@kurier.com.br", "");
+            cc = cc.replace("alex.andrade@kurier.com.br,", "");
+            $("#cc").val(cc);
+          }
         }
-        
+
 
         var txt = $("#cc").val();
         txt = txt.replace("cliente,", "");
@@ -965,7 +973,7 @@ $(document).ready(() => {
             var tipos = forn.tipos;
             var tipo = tipos.find((tip) => tip.id == idOp);
             attAssunto(tipo.assunto);
-           
+
           }
         }
       });
@@ -991,7 +999,7 @@ $(document).ready(() => {
                 );
               });
               $("#desOp").val(forn.emails[0].email);
-              
+
               if ($("#forOp").val() == 3) {
                 $("#desOp").attr("multiple", "multiple");
               } else {
@@ -1030,7 +1038,7 @@ $(document).ready(() => {
         if ($("#tipOp").val() && $("#tipOp").val() != 0) {
           var forId = $("#forOp").val();
           var tipId = $("#tipOp").val();
-         
+
           //se fornecedor for solucionare
           var txt = "";
           if (forId == 1) {
