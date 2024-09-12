@@ -839,288 +839,293 @@ $(document).ready(() => {
     pegarArquivos(e);
     $iframe.removeClass("dragover");
   });
-
-  // Função para carregar o arquivo JSON
+  var carregou = false;
+  // Função para carregar o  arquivo JSON
   $.getJSON("../static/dados.json", (data) => {
     db.ref("/users/" + id).on("value", (dataBD) => {
-      userDados = dataBD.val();
-      campos = data.campos;
-      definirCamposPersonalizados(campos);
-      esconderFilhos("camposPersonalizadosBox");
-      definirCampos(userDados, data);
-
-      $("#toggle1").click(function () {
-        $(this).find("img").toggleClass("up down");
-
-        $("#toggleBox1").slideToggle(400, "swing");
-      });
-      $("#toggle2").hide();
-      $("#toggle2").click(function () {
-        $(this).find("img").toggleClass("up down");
-        $("#toggleBox2").slideToggle(400, "swing");
-      });
-      $("#toggle3").click(function () {
-        $(this).find("img").toggleClass("up down");
-        $("#toggleBox3").slideToggle(400, "swing");
-      });
-
-      $("#solOp").change(() => {
-
-        $("#cc").trigger("change");
-        if ($("#solOp").val() && $("#solOp").val() != 0) {
-          var solEmail = $("#solOp").val();
-          if (solEmail == "") {
-            $("#labelId").hide();
-            $("#idEmBox").hide();
-            $("#idEmCaixa").hide();
-          } else {
-            $("#labelId").show();
-            $("#idEmBox").show();
-            $("#idEmCaixa").show();
-          }
-          if (solEmail == "cliente") {
-            $("#idEmBox").show();
-            $("#idEmCaixa").show();
-            $("#labelId").show();
-            $("#idEmCaixa").attr("placeholder", "Digite o id do ticket");
-            $("#labelId").text("ID DO TICKET: ");
-          } else {
-            emailUser = localStorage.getItem("emailUser");
-            if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
-              $("#idEmCaixa").attr("placeholder", "Digite o id da agenda");
-              $("#labelId").text("ID DA AGENDA: ");
-              $("#labelId").show();
-            } else {
+      if(!carregou){
+        userDados = dataBD.val();
+        campos = data.campos;
+        toggleTheme(userDados.darkTheme)
+        definirCamposPersonalizados(campos);
+        esconderFilhos("camposPersonalizadosBox");
+        definirCampos(userDados, data);
+  
+        $("#toggle1").click(function () {
+          $(this).find("img").toggleClass("up down");
+  
+          $("#toggleBox1").slideToggle(400, "swing");
+        });
+        $("#toggle2").hide();
+        $("#toggle2").click(function () {
+          $(this).find("img").toggleClass("up down");
+          $("#toggleBox2").slideToggle(400, "swing");
+        });
+        $("#toggle3").click(function () {
+          $(this).find("img").toggleClass("up down");
+          $("#toggleBox3").slideToggle(400, "swing");
+        });
+  
+        $("#solOp").change(() => {
+  
+          $("#cc").trigger("change");
+          if ($("#solOp").val() && $("#solOp").val() != 0) {
+            var solEmail = $("#solOp").val();
+            if (solEmail == "") {
+              $("#labelId").hide();
               $("#idEmBox").hide();
               $("#idEmCaixa").hide();
-              $("#labelId").hide();
-            }
-          }
-
-          $("#cc").val(solEmail).trigger("change");
-        } else {
-          $("#cc").val("").trigger("change");
-        }
-      });
-      $("#cc").change(() => {
-        var emailDes = $("#desOp").val();
-        var cc = $("#cc").val();
-        if (emailDes) {
-          if (!cc.includes("meliza@easyjur.com")) {
-            if (cc != "") {
-              cc += ",meliza@easyjur.com";
             } else {
-              cc = "meliza@easyjur.com,";
+              $("#labelId").show();
+              $("#idEmBox").show();
+              $("#idEmCaixa").show();
             }
-            $("#cc").val(cc);
-          }
-          if (
-            emailDes.includes("leticia.rocha@asaas.com.br") ||
-            emailDes.includes("integracoes@asaas.com.br")
-          ) {
-
-            if (!cc.includes("ecardoso@easyjur.com")) {
-              if (cc != "") {
-                cc += ",ecardoso@easyjur.com";
+            if (solEmail == "cliente") {
+              $("#idEmBox").show();
+              $("#idEmCaixa").show();
+              $("#labelId").show();
+              $("#idEmCaixa").attr("placeholder", "Digite o id do ticket");
+              $("#labelId").text("ID DO TICKET: ");
+            } else {
+              emailUser = localStorage.getItem("emailUser");
+              if (emailUser == "meliza@easyjur.com" || emailUser == "maraelizateste@gmail.com") {
+                $("#idEmCaixa").attr("placeholder", "Digite o id da agenda");
+                $("#labelId").text("ID DA AGENDA: ");
+                $("#labelId").show();
               } else {
-                cc = "ecardoso@easyjur.com,";
+                $("#idEmBox").hide();
+                $("#idEmCaixa").hide();
+                $("#labelId").hide();
               }
-              $("#cc").val(cc);
             }
-
+  
+            $("#cc").val(solEmail).trigger("change");
           } else {
-            cc = cc.replace(",ecardoso@easyjur.com", "");
-            cc = cc.replace("ecardoso@easyjur.com,", "");
-            $("#cc").val(cc);
-          }
-
-          if (
-            emailDes.includes("atendimento@kurier.com.br")
-          ) {
-            if (!cc.includes("alex.andrade@kurier.com.br")) {
-              if (cc != "") {
-                cc += ",alex.andrade@kurier.com.br";
-              } else {
-                cc = "alex.andrade@kurier.com.br,";
-              }
-              $("#cc").val(cc);
-            }
-
-          } else {
-            cc = cc.replace(",alex.andrade@kurier.com.br", "");
-            cc = cc.replace("alex.andrade@kurier.com.br,", "");
-            $("#cc").val(cc);
-          }
-        }
-
-
-        var txt = $("#cc").val();
-        txt = txt.replace("cliente,", "");
-        txt = txt.replace("ej,", "");
-        txt = txt.replace("cliente", "");
-        txt = txt.replace("ej", "");
-        $("#cc").val(txt);
-      });
-      $("#idEmCaixa").change(() => {
-        var idEmail = $("#idEmCaixa").val();
-        if (idEmail) {
-          $("#forBox").show();
-          var assunto = $("#assunto").val();
-          if (assunto.length > 2) {
-            var idOp = $("#tipOp").val();
-            idFor = $("#forOp").val();
-            var forn = fornecedores.find((forn) => forn.id == idFor);
-            var tipos = forn.tipos;
-            var tipo = tipos.find((tip) => tip.id == idOp);
-            attAssunto(tipo.assunto);
-
-          }
-        }
-      });
-      $("#forOp").change(() => {
-        if ($("#forOp").val() && $("#forOp").val() != 0) {
-          idFor = $("#forOp").val();
-          if (idFor != 0) {
-            var forn = fornecedores.find((forn) => forn.id == idFor);
-
-            if (forn.emails) {
-              $("#desOp").empty()
-
-              forn.emails.forEach((email) => {
-                $("#desOp").append(
-                  '<option value="' +
-                  email.email +
-                  '">' +
-                  email.nome +
-                  " [" +
-                  email.tipo +
-                  "]" +
-                  "</option>"
-                );
-              });
-              $("#desOp").val(forn.emails[0].email);
-
-              if ($("#forOp").val() == 3) {
-                $("#desOp").attr("multiple", "multiple");
-              } else {
-                $("#desOp").removeAttr("multiple");
-              }
-              $("#desOp").select2({
-                placeholder: "Selecione o destinatário",
-                theme: "classic",
-                width: "100%",
-                language: {
-                  noResults: function () {
-                    return "Nenhum resultado encontrado";
-                  },
-                },
-              });
-              $("#desBox").show();
-
-              $("#cc").trigger("change");
-              definirTipo();
-              attTemplate(data)
-            }
-          } else {
-            $("#tipBox").hide();
-            $("#desBox").hide();
-            esconderFilhos("camposPersonalizadosBox");
-          }
-        }
-      });
-      $("#desOp").change(() => {
-        $("#cc").trigger("change");
-        if ($("#desOp").val() && $("#desOp").val() != 0) {
-          definirTipo();
-        }
-      });
-      $("#tipOp").change(() => {
-        if ($("#tipOp").val() && $("#tipOp").val() != 0) {
-          var forId = $("#forOp").val();
-          var tipId = $("#tipOp").val();
-
-          //se fornecedor for solucionare
-          var txt = "";
-          if (forId == 1) {
-            if (tipId == 4 || tipId == 19 || tipId == 13) {
-              txt =
-                "Antes de abrir o chamado, por favor, verifique as credenciais do cliente diretamente no site do tribunal";
-            } else if (tipId == 20) {
-              txt =
-                "Antes de solicitar o refinamento, peça autorização para o cilente, pois corre-se o risco de perda de publicação.";
-            } else if (tipId == 10 || tipId == 7) {
-              txt =
-                "O prazo de coleta de andamentos é de 48 horas úteis, por favor, verifique se está realmente fora do prazo";
-            } else if (tipId == 11 || tipId == 8) {
-              txt =
-                "O prazo de coleta de publicações é de 12 horas úteis, por favor, verifique se está realmente fora do prazo";
-            } else if (tipId == 12 || tipId == 9) {
-              txt =
-                "O prazo de coleta de intimações é de 24 horas úteis, por favor, verifique se está realmente fora do prazo";
-            } else {
-              tipId = 0;
-            }
-          } else if (forId == 2) {
-            //se for a Kurier
-            if (tipId == 3) {
-              txt =
-                "O monitoramento de processos distribuídos é feito pela razão social. Para monitorar pelo CNPJ, cadastre-o como variação de um termo monitorado (razão social).";
-            } else {
-              tipId = 0;
-            }
-          } else if (forId == 3) {
-            //se for o Asaas
-            if (tipId == 3) {
-              txt =
-                "Adicione as respostas do cliente do formulário de solicitação de aumento de limite diretamente na caixa de e-mail!";
-            } else {
-              tipId = 0;
-            }
-          }
-          if (tipId != 0 && tipId != "") {
-            $("#alertMsg").text(txt);
-            Swal.fire({
-              icon: "info",
-              title: "Atenção!",
-              text: txt,
-            });
-          } else {
-            $("#alertMsg").text("");
-          }
-          attTemplate(data);
-        }
-      });
-
-      $("#destinatario").on("input", () => {
-        habilita();
-      });
-      $("#assunto").on("input", () => {
-        habilita();
-      });
-      $("#email").on("input", () => {
-        habilita();
-      });
-      $("#camposPersonalizadosBox").on("input", "input", () => {
-        var preenchido = false;
-        $("#camposPersonalizadosBox input").each(function () {
-          if ($(this).val().trim() !== "") {
-            preenchido = true;
-            return false;
+            $("#cc").val("").trigger("change");
           }
         });
-
-        $("#cpBtn").attr("disabled", !preenchido);
-      });
-
-      $("#cpBtn").click(() => {
-        $("html, body").animate(
-          {
-            scrollTop: $("#toggle3").offset().top,
-          },
-          300
-        );
-        addTemplate(data);
-      })
+        $("#cc").change(() => {
+          var emailDes = $("#desOp").val();
+          var cc = $("#cc").val();
+          if (emailDes) {
+            if (!cc.includes("meliza@easyjur.com")) {
+              if (cc != "") {
+                cc += ",meliza@easyjur.com";
+              } else {
+                cc = "meliza@easyjur.com,";
+              }
+              $("#cc").val(cc);
+            }
+            if (
+              emailDes.includes("leticia.rocha@asaas.com.br") ||
+              emailDes.includes("integracoes@asaas.com.br")
+            ) {
+  
+              if (!cc.includes("ecardoso@easyjur.com")) {
+                if (cc != "") {
+                  cc += ",ecardoso@easyjur.com";
+                } else {
+                  cc = "ecardoso@easyjur.com,";
+                }
+                $("#cc").val(cc);
+              }
+  
+            } else {
+              cc = cc.replace(",ecardoso@easyjur.com", "");
+              cc = cc.replace("ecardoso@easyjur.com,", "");
+              $("#cc").val(cc);
+            }
+  
+            if (
+              emailDes.includes("atendimento@kurier.com.br")
+            ) {
+              if (!cc.includes("alex.andrade@kurier.com.br")) {
+                if (cc != "") {
+                  cc += ",alex.andrade@kurier.com.br";
+                } else {
+                  cc = "alex.andrade@kurier.com.br,";
+                }
+                $("#cc").val(cc);
+              }
+  
+            } else {
+              cc = cc.replace(",alex.andrade@kurier.com.br", "");
+              cc = cc.replace("alex.andrade@kurier.com.br,", "");
+              $("#cc").val(cc);
+            }
+          }
+  
+  
+          var txt = $("#cc").val();
+          txt = txt.replace("cliente,", "");
+          txt = txt.replace("ej,", "");
+          txt = txt.replace("cliente", "");
+          txt = txt.replace("ej", "");
+          $("#cc").val(txt);
+        });
+        $("#idEmCaixa").change(() => {
+          var idEmail = $("#idEmCaixa").val();
+          if (idEmail) {
+            $("#forBox").show();
+            var assunto = $("#assunto").val();
+            if (assunto.length > 2) {
+              var idOp = $("#tipOp").val();
+              idFor = $("#forOp").val();
+              var forn = fornecedores.find((forn) => forn.id == idFor);
+              var tipos = forn.tipos;
+              var tipo = tipos.find((tip) => tip.id == idOp);
+              attAssunto(tipo.assunto);
+  
+            }
+          }
+        });
+        $("#forOp").change(() => {
+          if ($("#forOp").val() && $("#forOp").val() != 0) {
+            idFor = $("#forOp").val();
+            if (idFor != 0) {
+              var forn = fornecedores.find((forn) => forn.id == idFor);
+  
+              if (forn.emails) {
+                $("#desOp").empty()
+  
+                forn.emails.forEach((email) => {
+                  $("#desOp").append(
+                    '<option value="' +
+                    email.email +
+                    '">' +
+                    email.nome +
+                    " [" +
+                    email.tipo +
+                    "]" +
+                    "</option>"
+                  );
+                });
+                $("#desOp").val(forn.emails[0].email);
+  
+                if ($("#forOp").val() == 3) {
+                  $("#desOp").attr("multiple", "multiple");
+                } else {
+                  $("#desOp").removeAttr("multiple");
+                }
+                $("#desOp").select2({
+                  placeholder: "Selecione o destinatário",
+                  theme: "classic",
+                  width: "100%",
+                  language: {
+                    noResults: function () {
+                      return "Nenhum resultado encontrado";
+                    },
+                  },
+                });
+                $("#desBox").show();
+  
+                $("#cc").trigger("change");
+                definirTipo();
+                attTemplate(data)
+              }
+            } else {
+              $("#tipBox").hide();
+              $("#desBox").hide();
+              esconderFilhos("camposPersonalizadosBox");
+            }
+          }
+        });
+        $("#desOp").change(() => {
+          $("#cc").trigger("change");
+          if ($("#desOp").val() && $("#desOp").val() != 0) {
+            definirTipo();
+          }
+        });
+        $("#tipOp").change(() => {
+          if ($("#tipOp").val() && $("#tipOp").val() != 0) {
+            var forId = $("#forOp").val();
+            var tipId = $("#tipOp").val();
+  
+            //se fornecedor for solucionare
+            var txt = "";
+            if (forId == 1) {
+              if (tipId == 4 || tipId == 19 || tipId == 13) {
+                txt =
+                  "Antes de abrir o chamado, por favor, verifique as credenciais do cliente diretamente no site do tribunal";
+              } else if (tipId == 20) {
+                txt =
+                  "Antes de solicitar o refinamento, peça autorização para o cilente, pois corre-se o risco de perda de publicação.";
+              } else if (tipId == 10 || tipId == 7) {
+                txt =
+                  "O prazo de coleta de andamentos é de 48 horas úteis, por favor, verifique se está realmente fora do prazo";
+              } else if (tipId == 11 || tipId == 8) {
+                txt =
+                  "O prazo de coleta de publicações é de 12 horas úteis, por favor, verifique se está realmente fora do prazo";
+              } else if (tipId == 12 || tipId == 9) {
+                txt =
+                  "O prazo de coleta de intimações é de 24 horas úteis, por favor, verifique se está realmente fora do prazo";
+              } else {
+                tipId = 0;
+              }
+            } else if (forId == 2) {
+              //se for a Kurier
+              if (tipId == 3) {
+                txt =
+                  "O monitoramento de processos distribuídos é feito pela razão social. Para monitorar pelo CNPJ, cadastre-o como variação de um termo monitorado (razão social).";
+              } else {
+                tipId = 0;
+              }
+            } else if (forId == 3) {
+              //se for o Asaas
+              if (tipId == 3) {
+                txt =
+                  "Adicione as respostas do cliente do formulário de solicitação de aumento de limite diretamente na caixa de e-mail!";
+              } else {
+                tipId = 0;
+              }
+            }
+            if (tipId != 0 && tipId != "") {
+              $("#alertMsg").text(txt);
+              Swal.fire({
+                icon: "info",
+                title: "Atenção!",
+                text: txt,
+              });
+            } else {
+              $("#alertMsg").text("");
+            }
+            attTemplate(data);
+          }
+        });
+  
+        $("#destinatario").on("input", () => {
+          habilita();
+        });
+        $("#assunto").on("input", () => {
+          habilita();
+        });
+        $("#email").on("input", () => {
+          habilita();
+        });
+        $("#camposPersonalizadosBox").on("input", "input", () => {
+          var preenchido = false;
+          $("#camposPersonalizadosBox input").each(function () {
+            if ($(this).val().trim() !== "") {
+              preenchido = true;
+              return false;
+            }
+          });
+  
+          $("#cpBtn").attr("disabled", !preenchido);
+        });
+  
+        $("#cpBtn").click(() => {
+          $("html, body").animate(
+            {
+              scrollTop: $("#toggle3").offset().top,
+            },
+            300
+          );
+          addTemplate(data);
+        })
+        carregou = true;
+      }
+      
 
     });
   }).fail((jqXHR, textStatus, errorThrown) => {
@@ -1175,4 +1180,10 @@ function uploadImagem(base64Image) {
       });
     }
   );
+}
+
+function changeTheme(){
+
+  mudarTema();
+
 }
